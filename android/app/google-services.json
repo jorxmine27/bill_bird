@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "986101236611",
+    "firebase_url": "https://billbird-f5eeb-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "billbird-f5eeb",
+    "storage_bucket": "billbird-f5eeb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:986101236611:android:9010fb57538eeb8b086cb6",
+        "android_client_info": {
+          "package_name": "com.mycompany.billbird"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "986101236611-hklj1lndv8aog4bsvp860g3bu0d9kjbn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mycompany.billbird",
+            "certificate_hash": "9bbb3186b2189ef16d8f272bdab59362c395cbb4"
+          }
+        },
+        {
+          "client_id": "986101236611-b6n1k3ii8q3m0fmvksb12m06n0922d0c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAf_b4YoqGrhR9TNwHsFyNUQ6LACHxfHyU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "986101236611-b6n1k3ii8q3m0fmvksb12m06n0922d0c.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "986101236611-7h2g57mttu2c8r9eiih92d2ssfiurmhp.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mycompany.billbird"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

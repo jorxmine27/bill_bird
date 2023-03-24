@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>986101236611-7h2g57mttu2c8r9eiih92d2ssfiurmhp.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.986101236611-7h2g57mttu2c8r9eiih92d2ssfiurmhp</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>986101236611-hklj1lndv8aog4bsvp860g3bu0d9kjbn.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyA7VGStW6ZCu8GvdAyQG2EjZBdQluEBYO8</string>
+	<key>GCM_SENDER_ID</key>
+	<string>986101236611</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.mycompany.billbird</string>
+	<key>PROJECT_ID</key>
+	<string>billbird-f5eeb</string>
+	<key>STORAGE_BUCKET</key>
+	<string>billbird-f5eeb.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:986101236611:ios:7a1f2bc029364948086cb6</string>
+	<key>DATABASE_URL</key>
+	<string>https://billbird-f5eeb-default-rtdb.europe-west1.firebasedatabase.app</string>
+</dict>
+</plist>
