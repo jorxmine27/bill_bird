@@ -1,3 +1,5 @@
+import 'package:flutter_map/flutter_map.dart';
+
 import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_google_map.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
@@ -7,6 +9,7 @@ import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:latlong2/latlong.dart' as latLng;
 import 'map_model.dart';
 export 'map_model.dart';
 
@@ -136,39 +139,57 @@ class _MapWidgetState extends State<MapWidget> {
                       );
                     }
                     final googleMapGeUbicacionDataResponse = snapshot.data!;
-                    return FlutterFlowGoogleMap(
-                      controller: _model.googleMapsController,
-                      onCameraIdle: (latLng) =>
-                          _model.googleMapsCenter = latLng,
-                      initialLocation: _model.googleMapsCenter ??=
-                          LatLng(41.3958734, 2.1549861),
-                      markers: functions
-                          .listStringToLatLng((getJsonField(
-                            googleMapGeUbicacionDataResponse.jsonBody,
-                            r'''$[:].LatLng''',
-                          ) as List)
-                              .map<String>((s) => s.toString())
-                              .toList()!)
-                          .map(
-                            (marker) => FlutterFlowMarker(
-                              marker.serialize(),
-                              marker,
-                            ),
-                          )
-                          .toList(),
-                      markerColor: GoogleMarkerColor.red,
-                      mapType: MapType.normal,
-                      style: GoogleMapStyle.standard,
-                      initialZoom: 14.0,
-                      allowInteraction: true,
-                      allowZoom: true,
-                      showZoomControls: true,
-                      showLocation: true,
-                      showCompass: false,
-                      showMapToolbar: false,
-                      showTraffic: false,
-                      centerMapOnMarkerTap: true,
+                    return FlutterMap(
+                      options: MapOptions(
+                        center: latLng.LatLng(41.3958734, 2.1549861),
+                        zoom: 13.0,
+                      ),
+                      nonRotatedChildren: [
+                        AttributionWidget.defaultWidget(
+                          source: 'OpenStreetMap contributors',
+                          onSourceTapped: null,
+                        ),
+                      ],
+                      children: [
+                        TileLayer(
+                          urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                          userAgentPackageName: 'com.example.app',
+                        )
+                      ],
                     );
+                    // return FlutterFlowGoogleMap(
+                    //   controller: _model.googleMapsController,
+                    //   onCameraIdle: (latLng) =>
+                    //       _model.googleMapsCenter = latLng,
+                    //   initialLocation: _model.googleMapsCenter ??=
+                    //       LatLng(41.3958734, 2.1549861),
+                    //   markers: functions
+                    //       .listStringToLatLng((getJsonField(
+                    //         googleMapGeUbicacionDataResponse.jsonBody,
+                    //         r'''$[:].LatLng''',
+                    //       ) as List)
+                    //           .map<String>((s) => s.toString())
+                    //           .toList()!)
+                    //       .map(
+                    //         (marker) => FlutterFlowMarker(
+                    //           marker.serialize(),
+                    //           marker,
+                    //         ),
+                    //       )
+                    //       .toList(),
+                    //   markerColor: GoogleMarkerColor.red,
+                    //   mapType: MapType.normal,
+                    //   style: GoogleMapStyle.standard,
+                    //   initialZoom: 14.0,
+                    //   allowInteraction: true,
+                    //   allowZoom: true,
+                    //   showZoomControls: true,
+                    //   showLocation: true,
+                    //   showCompass: false,
+                    //   showMapToolbar: false,
+                    //   showTraffic: false,
+                    //   centerMapOnMarkerTap: true,
+                    // );
                   },
                 ),
               ),
