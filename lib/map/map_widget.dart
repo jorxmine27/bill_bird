@@ -124,77 +124,81 @@ class _MapWidgetState extends State<MapWidget> {
               ),
               Expanded(
                 child: FutureBuilder<ApiCallResponse>(
-                  future: GeUbicacionDataCall.call(),
+                  future: GETUbicacionDataCall.call(),
                   builder: (context, snapshot) {
-                    // Customize what your widget looks like when it's loading.
                     if (!snapshot.hasData) {
                       return Center(
                         child: SizedBox(
                           width: 50.0,
                           height: 50.0,
                           child: CircularProgressIndicator(
-                            color: FlutterFlowTheme.of(context).primaryColor,
+                            color: FlutterFlowTheme
+                                .of(context)
+                                .primaryColor,
                           ),
                         ),
                       );
                     }
-                    final googleMapGeUbicacionDataResponse = snapshot.data!;
-                    return FlutterMap(
-                      options: MapOptions(
-                        center: latLng.LatLng(41.3958734, 2.1549861),
-                        zoom: 13.0,
+                    final GETUbicacionDataResponse = snapshot.data!;
+                  return FlutterMap(
+                    options: MapOptions(
+                      center: latLng.LatLng(41.3958734, 2.1549861),
+                      zoom: 13.0,
+                    ),
+                    nonRotatedChildren: [
+                      AttributionWidget.defaultWidget(
+                        source: 'OpenStreetMap contributors',
+                        onSourceTapped: null,
                       ),
-                      nonRotatedChildren: [
-                        AttributionWidget.defaultWidget(
-                          source: 'OpenStreetMap contributors',
-                          onSourceTapped: null,
-                        ),
-                      ],
-                      children: [
-                        TileLayer(
-                          urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                          userAgentPackageName: 'com.example.app',
-                        )
-                      ],
-                    );
-                    // return FlutterFlowGoogleMap(
-                    //   controller: _model.googleMapsController,
-                    //   onCameraIdle: (latLng) =>
-                    //       _model.googleMapsCenter = latLng,
-                    //   initialLocation: _model.googleMapsCenter ??=
-                    //       LatLng(41.3958734, 2.1549861),
-                    //   markers: functions
-                    //       .listStringToLatLng((getJsonField(
-                    //         googleMapGeUbicacionDataResponse.jsonBody,
-                    //         r'''$[:].LatLng''',
-                    //       ) as List)
-                    //           .map<String>((s) => s.toString())
-                    //           .toList()!)
-                    //       .map(
-                    //         (marker) => FlutterFlowMarker(
-                    //           marker.serialize(),
-                    //           marker,
-                    //         ),
-                    //       )
-                    //       .toList(),
-                    //   markerColor: GoogleMarkerColor.red,
-                    //   mapType: MapType.normal,
-                    //   style: GoogleMapStyle.standard,
-                    //   initialZoom: 14.0,
-                    //   allowInteraction: true,
-                    //   allowZoom: true,
-                    //   showZoomControls: true,
-                    //   showLocation: true,
-                    //   showCompass: false,
-                    //   showMapToolbar: false,
-                    //   showTraffic: false,
-                    //   centerMapOnMarkerTap: true,
-                    // );
-                  },
-                ),
+                    ],
+                    children: [
+                      TileLayer(
+                        urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                        userAgentPackageName: 'com.example.app',
+                      ),
+                      MarkerLayer(
+                          markers: functions.Marcadores(GETUbicacionDataResponse)
+                      )
+                    ],
+                  );
+                  //   return FlutterFlowGoogleMap(
+                  //     controller: _model.googleMapsController,
+                  //     onCameraIdle: (latLng) =>
+                  //         _model.googleMapsCenter = latLng,
+                  //     initialLocation: _model.googleMapsCenter ??=
+                  //         LatLng(41.3958734, 2.1549861),
+                  //     markers: functions
+                  //         .listStringToLatLng((getJsonField(
+                  //           googleMapGeUbicacionDataResponse.jsonBody,
+                  //           r'''$[:].LatLng''',
+                  //         ) as List)
+                  //             .map<String>((s) => s.toString())
+                  //             .toList()!)
+                  //         .map(
+                  //           (marker) => FlutterFlowMarker(
+                  //             marker.serialize(),
+                  //             marker,
+                  //           ),
+                  //         )
+                  //         .toList(),
+                  //     markerColor: GoogleMarkerColor.red,
+                  //     mapType: MapType.normal,
+                  //     style: GoogleMapStyle.standard,
+                  //     initialZoom: 14.0,
+                  //     allowInteraction: true,
+                  //     allowZoom: true,
+                  //     showZoomControls: true,
+                  //     showLocation: true,
+                  //     showCompass: false,
+                  //     showMapToolbar: false,
+                  //     showTraffic: false,
+                  //     centerMapOnMarkerTap: true,
+                  //   );
+                  // },
+                }
               ),
-            ],
-          ),
+            ),
+          ]),
         ),
       ),
     );

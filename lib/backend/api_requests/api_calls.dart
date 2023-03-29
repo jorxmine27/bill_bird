@@ -86,10 +86,10 @@ class GetCityDataCall {
   }
 }
 
-class GeUbicacionDataCall {
+class GETUbicacionDataCall {
   static Future<ApiCallResponse> call() {
     return ApiManager.instance.makeApiCall(
-      callName: 'GeUbicacionData',
+      callName: 'GETUbicacionData',
       apiUrl:
           'https://ynojtnvbhcizklalzkqp.supabase.co/rest/v1/UBICACION?select=*',
       callType: ApiCallType.GET,
