@@ -52,16 +52,18 @@ List<String> cargarUbicaciones(ApiCallResponse Response) {
 List<Marker> Marcadores(ApiCallResponse Response) {
   List<String> coordenadas = cargarUbicaciones(Response);
   List<latLng.LatLng> parques = listStringToLatLng(coordenadas);
-  List<Marker> Marcadores = parques.map((coordenada) => Marker(
-      point: coordenada,
-      width: 60,
-      height: 60,
-      builder: (context) => Icon(
-        Icons.pin_drop,
-        size: 60,
-        color: Colors.blueAccent,
-      ),
-  )).toList();
-  
+  List<Marker> Marcadores = parques
+      .map((coordenada) => Marker(
+            point: coordenada,
+            width: 60,
+            height: 60,
+            builder: (context) => Icon(
+              Icons.pin_drop,
+              size: 60,
+              color: Colors.blueAccent,
+            ),
+          ))
+      .toList();
+
   return Marcadores;
 }
