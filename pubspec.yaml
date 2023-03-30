@@ -126,7 +126,7 @@ flutter:
   assets:
     - assets/fonts/
     - assets/images/
-    - assets/images/BillBird.png
+    - assets/images/billbird.png
     - assets/videos/
     - assets/audios/
     - assets/lottie_animations/

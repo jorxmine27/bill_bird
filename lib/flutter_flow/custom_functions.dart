@@ -57,13 +57,10 @@ List<Marker> Marcadores(ApiCallResponse Response) {
             point: coordenada,
             width: 60,
             height: 60,
-            builder: (context) => Icon(
-              Icons.pin_drop,
-              size: 60,
-              color: Colors.blueAccent,
-            ),
+            builder: (context) => Image(
+              image: AssetImage('assets/images/billbird.png'),
+            )
           ))
       .toList();
-
   return Marcadores;
 }
