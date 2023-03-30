@@ -1,7 +1,8 @@
 import 'package:flutter_map/flutter_map.dart';
 
+import 'package:flutter_map_marker_popup/flutter_map_marker_popup.dart';
+import 'package:bill_bird/components/show_park_widget.dart' as park;
 import '/backend/api_requests/api_calls.dart';
-import '/flutter_flow/flutter_flow_google_map.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -23,6 +24,7 @@ class MapWidget extends StatefulWidget {
 class _MapWidgetState extends State<MapWidget> {
   late MapModel _model;
 
+  final PopupController _popupLayerController = PopupController();
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final _unfocusNode = FocusNode();
 
@@ -47,7 +49,9 @@ class _MapWidgetState extends State<MapWidget> {
     return Scaffold(
       key: scaffoldKey,
       resizeToAvoidBottomInset: false,
-      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+      backgroundColor: FlutterFlowTheme
+          .of(context)
+          .primaryBackground,
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
@@ -64,10 +68,13 @@ class _MapWidgetState extends State<MapWidget> {
                     alignment: AlignmentDirectional(-0.94, 0.08),
                     child: Text(
                       'MAP',
-                      style: FlutterFlowTheme.of(context).bodyText1.override(
-                            fontFamily: 'Jura',
-                            fontSize: 38.0,
-                          ),
+                      style: FlutterFlowTheme
+                          .of(context)
+                          .bodyText1
+                          .override(
+                        fontFamily: 'Jura',
+                        fontSize: 38.0,
+                      ),
                     ),
                   ),
                   Align(
@@ -83,7 +90,9 @@ class _MapWidgetState extends State<MapWidget> {
                               height: 50.0,
                               child: CircularProgressIndicator(
                                 color:
-                                    FlutterFlowTheme.of(context).primaryColor,
+                                FlutterFlowTheme
+                                    .of(context)
+                                    .primaryColor,
                               ),
                             ),
                           );
@@ -92,10 +101,13 @@ class _MapWidgetState extends State<MapWidget> {
                         return Text(
                           'Nothing',
                           style:
-                              FlutterFlowTheme.of(context).bodyText1.override(
-                                    fontFamily: 'Jura',
-                                    fontSize: 38.0,
-                                  ),
+                          FlutterFlowTheme
+                              .of(context)
+                              .bodyText1
+                              .override(
+                            fontFamily: 'Jura',
+                            fontSize: 38.0,
+                          ),
                         );
                       },
                     ),
@@ -109,7 +121,9 @@ class _MapWidgetState extends State<MapWidget> {
                       buttonSize: 60.0,
                       icon: Icon(
                         Icons.arrow_back_rounded,
-                        color: FlutterFlowTheme.of(context).primaryText,
+                        color: FlutterFlowTheme
+                            .of(context)
+                            .primaryText,
                         size: 45.0,
                       ),
                       onPressed: () async {
@@ -130,7 +144,9 @@ class _MapWidgetState extends State<MapWidget> {
                           width: 50.0,
                           height: 50.0,
                           child: CircularProgressIndicator(
-                            color: FlutterFlowTheme.of(context).primaryColor,
+                            color: FlutterFlowTheme
+                                .of(context)
+                                .primaryColor,
                           ),
                         ),
                       );
@@ -138,8 +154,16 @@ class _MapWidgetState extends State<MapWidget> {
                     final GETUbicacionDataResponse = snapshot.data!;
                     return FlutterMap(
                       options: MapOptions(
-                        center: latLng.LatLng(41.3958734, 2.1549861),
-                        zoom: 13.0,
+                          center: latLng.LatLng(41.3958734, 2.1549861),
+                          zoom: 13.0,
+                          onTap: (_, __) =>
+                              _popupLayerController.hideAllPopups(),
+                        // onTap: (TapPosition, latlng) {
+                        //   Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(builder: (context) => ShowParkModel()),
+                        //   );
+                        // }
                       ),
                       nonRotatedChildren: [
                         AttributionWidget.defaultWidget(
@@ -150,48 +174,22 @@ class _MapWidgetState extends State<MapWidget> {
                       children: [
                         TileLayer(
                           urlTemplate:
-                              'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                          'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
                           userAgentPackageName: 'com.example.app',
                         ),
-                        MarkerLayer(
-                            markers:
-                                functions.Marcadores(GETUbicacionDataResponse))
+                        PopupMarkerLayerWidget(
+
+                          options: PopupMarkerLayerOptions(
+                              popupController: _popupLayerController,
+                              markers: functions.Marcadores(
+                                  GETUbicacionDataResponse),
+                              markerRotateAlignment: PopupMarkerLayerOptions
+                                  .rotationAlignmentFor(AnchorAlign.top),
+                              popupBuilder: (BuildContext context,
+                                  Marker marker) => Text('Test'))
+                          ),
                       ],
                     );
-                    //   return FlutterFlowGoogleMap(
-                    //     controller: _model.googleMapsController,
-                    //     onCameraIdle: (latLng) =>
-                    //         _model.googleMapsCenter = latLng,
-                    //     initialLocation: _model.googleMapsCenter ??=
-                    //         LatLng(41.3958734, 2.1549861),
-                    //     markers: functions
-                    //         .listStringToLatLng((getJsonField(
-                    //           googleMapGeUbicacionDataResponse.jsonBody,
-                    //           r'''$[:].LatLng''',
-                    //         ) as List)
-                    //             .map<String>((s) => s.toString())
-                    //             .toList()!)
-                    //         .map(
-                    //           (marker) => FlutterFlowMarker(
-                    //             marker.serialize(),
-                    //             marker,
-                    //           ),
-                    //         )
-                    //         .toList(),
-                    //     markerColor: GoogleMarkerColor.red,
-                    //     mapType: MapType.normal,
-                    //     style: GoogleMapStyle.standard,
-                    //     initialZoom: 14.0,
-                    //     allowInteraction: true,
-                    //     allowZoom: true,
-                    //     showZoomControls: true,
-                    //     showLocation: true,
-                    //     showCompass: false,
-                    //     showMapToolbar: false,
-                    //     showTraffic: false,
-                    //     centerMapOnMarkerTap: true,
-                    //   );
-                    // },
                   }),
             ),
           ]),
