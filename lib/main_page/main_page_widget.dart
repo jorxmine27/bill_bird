@@ -190,7 +190,7 @@ class _MainPageWidgetState extends State<MainPageWidget> {
                                   builder: (context) {
                                     final detalle = getJsonField(
                                       listViewGETPajarosDataResponse.jsonBody,
-                                      r'''$''',
+                                      r'''$''', true
                                     ).toList();
                                     return ListView.builder(
                                       padding: EdgeInsets.zero,

@@ -146,8 +146,8 @@ class ThemeTypography extends Typography {
   TextStyle get bodyText2 => GoogleFonts.getFont(
         'Poppins',
         color: theme.secondaryText,
-        fontWeight: FontWeight.w600,
-        fontSize: 14.0,
+        fontWeight: FontWeight.w400,
+        fontSize: 10.0,
       );
 }
 

@@ -14,7 +14,7 @@ class GETPajarosDataCall {
     return ApiManager.instance.makeApiCall(
       callName: 'GET pajaros data',
       apiUrl:
-          'https://ynojtnvbhcizklalzkqp.supabase.co/rest/v1/PAJARO?select=*,IMAGEN(url), APARECE(nombre_parque)',
+          'https://ynojtnvbhcizklalzkqp.supabase.co/rest/v1/PAJARO?select=*,IMAGEN(url)',
       callType: ApiCallType.GET,
       headers: {
         'apikey':
