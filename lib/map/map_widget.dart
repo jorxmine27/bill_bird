@@ -186,7 +186,7 @@ class _MapWidgetState extends State<MapWidget> {
                               markerRotateAlignment: PopupMarkerLayerOptions
                                   .rotationAlignmentFor(AnchorAlign.top),
                               popupBuilder: (BuildContext context,
-                                  Marker marker) => Text('Test'))
+                                  Marker marker) => park.ShowParkWidget())
                           ),
                       ],
                     );

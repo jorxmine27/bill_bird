@@ -72,10 +72,8 @@ class _ShowParkWidgetState extends State<ShowParkWidget> {
                     ? cardTaskDetailsUbicacionRowList.first
                     : null;
             return Container(
-              width: double.infinity,
-              constraints: BoxConstraints(
-                maxWidth: 570.0,
-              ),
+              width: 400,
+              height: 500,
               decoration: BoxDecoration(
                 color: FlutterFlowTheme.of(context).secondaryBackground,
                 borderRadius: BorderRadius.circular(8.0),
@@ -90,15 +88,15 @@ class _ShowParkWidgetState extends State<ShowParkWidget> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                      width: 557.5,
-                      height: 388.0,
+                      width: 400,
+                      height: 200,
                       decoration: BoxDecoration(
                         color: FlutterFlowTheme.of(context).secondaryBackground,
                       ),
                       child: Image.network(
                         'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Ciutadella_Park_fountain.jpg/1200px-Ciutadella_Park_fountain.jpg',
-                        width: 100.0,
-                        height: 100.0,
+                        width: 80.0,
+                        height: 80.0,
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -111,7 +109,6 @@ class _ShowParkWidgetState extends State<ShowParkWidget> {
                       ),
                     ),
                     Row(
-                      mainAxisSize: MainAxisSize.max,
                       children: [
                         Expanded(
                           child: Padding(
@@ -144,7 +141,7 @@ class _ShowParkWidgetState extends State<ShowParkWidget> {
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 0.0, 12.0, 0.0),
                             child: Text(
-                              'Schedule',
+                              'Schedule:',
                               style: FlutterFlowTheme.of(context).bodyText2,
                             ),
                           ),

@@ -147,7 +147,7 @@ class ThemeTypography extends Typography {
         'Poppins',
         color: theme.secondaryText,
         fontWeight: FontWeight.w600,
-        fontSize: 14.0,
+        fontSize: 10.0,
       );
 }
 
