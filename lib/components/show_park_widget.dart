@@ -1,3 +1,5 @@
+import 'package:bill_bird/backend/api_requests/api_calls.dart';
+
 import '/backend/supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -10,10 +12,10 @@ export 'show_park_model.dart';
 class ShowParkWidget extends StatefulWidget {
   const ShowParkWidget({
     Key? key,
-    this.location,
+    this.parque,
   }) : super(key: key);
 
-  final UbicacionRow? location;
+  final parque;
 
   @override
   _ShowParkWidgetState createState() => _ShowParkWidgetState();
@@ -49,12 +51,9 @@ class _ShowParkWidgetState extends State<ShowParkWidget> {
       alignment: AlignmentDirectional(0.0, 0.0),
       child: Padding(
         padding: EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 16.0),
-        child: FutureBuilder<List<UbicacionRow>>(
-          future: UbicacionTable().querySingleRow(
-            queryFn: (q) => q,
-          ),
-          builder: (context, snapshot) {
-            // Customize what your widget looks like when it's loading.
+        child: FutureBuilder<ApiCallResponse>(
+          future: GETUbicacionDataCall.call(),
+          builder: (context, snapshot) {// Customize what your widget looks like when it's loading.
             if (!snapshot.hasData) {
               return Center(
                 child: SizedBox(
@@ -66,11 +65,7 @@ class _ShowParkWidgetState extends State<ShowParkWidget> {
                 ),
               );
             }
-            List<UbicacionRow> cardTaskDetailsUbicacionRowList = snapshot.data!;
-            final cardTaskDetailsUbicacionRow =
-                cardTaskDetailsUbicacionRowList.isNotEmpty
-                    ? cardTaskDetailsUbicacionRowList.first
-                    : null;
+            final GETUbicacionDataResponseById = snapshot.data!;
             return Container(
               width: 400,
               height: 500,
@@ -94,7 +89,7 @@ class _ShowParkWidgetState extends State<ShowParkWidget> {
                         color: FlutterFlowTheme.of(context).secondaryBackground,
                       ),
                       child: Image.network(
-                        'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Ciutadella_Park_fountain.jpg/1200px-Ciutadella_Park_fountain.jpg',
+                        getJsonField(widget.parque, r'''$..parkImage''').toString(),
                         width: 80.0,
                         height: 80.0,
                         fit: BoxFit.cover,
@@ -115,7 +110,7 @@ class _ShowParkWidgetState extends State<ShowParkWidget> {
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 0.0, 12.0, 0.0),
                             child: Text(
-                              'Parc de la Ciutadella',
+                              getJsonField(widget.parque, r'''$..id''').toString(),
                               style: FlutterFlowTheme.of(context).title3,
                             ),
                           ),

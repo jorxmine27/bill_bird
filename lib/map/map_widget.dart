@@ -1,3 +1,4 @@
+import 'package:bill_bird/map/marker_model.dart';
 import 'package:flutter_map/flutter_map.dart';
 
 import 'package:flutter_map_marker_popup/flutter_map_marker_popup.dart';
@@ -11,8 +12,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:latlong2/latlong.dart' as latLng;
+
 import 'map_model.dart';
-export 'map_model.dart';
+import 'marker_model.dart';
 
 class MapWidget extends StatefulWidget {
   const MapWidget({Key? key}) : super(key: key);
@@ -150,46 +152,41 @@ class _MapWidgetState extends State<MapWidget> {
                           ),
                         ),
                       );
-                    }
-                    final GETUbicacionDataResponse = snapshot.data!;
-                    return FlutterMap(
-                      options: MapOptions(
+                    } else {
+                      final GETUbicacionDataResponse = snapshot.data!;
+                      final Marcadores = functions.cargarUbicaciones(GETUbicacionDataResponse);
+                      final Ubicaciones = functions.marcadores(GETUbicacionDataResponse);
+                      return FlutterMap(
+                        options: MapOptions(
                           center: latLng.LatLng(41.3958734, 2.1549861),
                           zoom: 13.0,
                           onTap: (_, __) =>
                               _popupLayerController.hideAllPopups(),
-                        // onTap: (TapPosition, latlng) {
-                        //   Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(builder: (context) => ShowParkModel()),
-                        //   );
-                        // }
-                      ),
-                      nonRotatedChildren: [
-                        AttributionWidget.defaultWidget(
-                          source: 'OpenStreetMap contributors',
-                          onSourceTapped: null,
                         ),
-                      ],
-                      children: [
-                        TileLayer(
-                          urlTemplate:
-                          'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                          userAgentPackageName: 'com.example.app',
-                        ),
-                        PopupMarkerLayerWidget(
-
-                          options: PopupMarkerLayerOptions(
-                              popupController: _popupLayerController,
-                              markers: functions.Marcadores(
-                                  GETUbicacionDataResponse),
-                              markerRotateAlignment: PopupMarkerLayerOptions
-                                  .rotationAlignmentFor(AnchorAlign.top),
-                              popupBuilder: (BuildContext context,
-                                  Marker marker) => park.ShowParkWidget())
+                        nonRotatedChildren: [
+                          AttributionWidget.defaultWidget(
+                            source: 'OpenStreetMap contributors',
+                            onSourceTapped: null,
                           ),
-                      ],
-                    );
+                        ],
+                        children: [
+                          TileLayer(
+                            urlTemplate:
+                            'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                            userAgentPackageName: 'com.example.app',
+                          ),
+                          PopupMarkerLayerWidget(
+                              options: PopupMarkerLayerOptions(
+                                  popupController: _popupLayerController,
+                                  markers: Ubicaciones,
+                                  markerRotateAlignment: PopupMarkerLayerOptions.rotationAlignmentFor(AnchorAlign.top),
+                                popupBuilder: (context, Marker Ubicacion) => park.ShowParkWidget(
+                                  parque: GETUbicacionDataResponse,
+                                )
+                              ),),
+                        ],
+                      );
+                    }
                   }),
             ),
           ]),

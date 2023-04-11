@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:bill_bird/components/show_park_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:page_transition/page_transition.dart';
@@ -129,6 +130,13 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                 chatRef: params.getParam(
                     'chatRef', ParamType.DocumentReference, false, ['chats']),
               ),
+            ),
+            FFRoute(
+              name: 'ShowPark',
+              path: 'showPark',
+              builder: (context, params) => ShowParkWidget(
+                parque: params.getParam('parque', ParamType.JSON)
+              )
             ),
             FFRoute(
               name: 'SearchPage',

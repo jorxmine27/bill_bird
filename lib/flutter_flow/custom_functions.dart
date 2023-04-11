@@ -44,12 +44,12 @@ List<latLng.LatLng> listStringToLatLng(List<String> stringsLatLng) {
 }
 
 List<String> cargarUbicaciones(ApiCallResponse Response) {
-  List<dynamic> response = getJsonField(Response.jsonBody, r'''$[:].LatLng''');
+  List<dynamic> response = getJsonField(Response.jsonBody, r'''$[:].UBICACION.LatLng''');
   List<String> coordenadas = response.cast<String>();
   return coordenadas;
 }
 
-List<Marker> Marcadores(ApiCallResponse Response) {
+List<Marker> marcadores(ApiCallResponse Response) {
   List<String> coordenadas = cargarUbicaciones(Response);
   List<latLng.LatLng> parques = listStringToLatLng(coordenadas);
   List<Marker> Marcadores = parques
