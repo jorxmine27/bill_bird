@@ -69,7 +69,7 @@ class GetCityDataCall {
     return ApiManager.instance.makeApiCall(
       callName: 'GetCityData',
       apiUrl:
-          'https://ynojtnvbhcizklalzkqp.supabase.co/rest/v1/CIUDAD?select=*,IMAGEN(url)',
+          'https://ynojtnvbhcizklalzkqp.supabase.co/rest/v1/MUNICIPIO?select=*,IMAGEN(url)',
       callType: ApiCallType.GET,
       headers: {
         'apikey':
