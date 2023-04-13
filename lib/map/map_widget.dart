@@ -180,9 +180,7 @@ class _MapWidgetState extends State<MapWidget> {
                                   popupController: _popupLayerController,
                                   markers: Ubicaciones,
                                   markerRotateAlignment: PopupMarkerLayerOptions.rotationAlignmentFor(AnchorAlign.top),
-                                popupBuilder: (context, Marker Ubicacion) => park.ShowParkWidget(
-                                  parque: GETUbicacionDataResponse,
-                                )
+                                popupBuilder: (context, Ubicaciones) => park.ShowParkWidget()
                               ),),
                         ],
                       );

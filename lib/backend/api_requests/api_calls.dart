@@ -115,7 +115,7 @@ class GETUbicacionDataCall {
     return ApiManager.instance.makeApiCall(
       callName: 'GETUbicacionData',
       apiUrl:
-      'https://ynojtnvbhcizklalzkqp.supabase.co/rest/v1/PARQUE?select=id&select=*,UBICACION!PARQUE_id_ubicacion_fkey(LatLng)',
+      'https://ynojtnvbhcizklalzkqp.supabase.co/rest/v1/PARQUE?select=*&select=*,UBICACION!PARQUE_id_ubicacion_fkey(LatLng)',
       callType: ApiCallType.GET,
       headers: {
         'apikey':
