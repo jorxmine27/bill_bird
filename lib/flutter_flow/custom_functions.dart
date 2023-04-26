@@ -25,10 +25,7 @@ bool searchEngineFunction(
   return searchInput.toLowerCase().contains(searchFor.toLowerCase());
 }
 
-LatLng latLngParser(
-  String? latitud,
-  String? longitud,
-) {
+LatLng latLngParser(String? latitud,String? longitud) {
   return LatLng(double.parse(latitud!), double.parse(longitud!));
 }
 
