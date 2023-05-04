@@ -1,14 +1,10 @@
-import '/backend/backend.dart';
 import '/flutter_flow/chat/index.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'chat_bot_model.dart';
-export 'chat_bot_model.dart';
 
 class ChatBotWidget extends StatefulWidget {
   const ChatBotWidget({
@@ -25,50 +21,56 @@ class ChatBotWidget extends StatefulWidget {
 }
 
 class _ChatBotWidgetState extends State<ChatBotWidget> {
-  late ChatBotModel _model;
+  final TextEditingController _controller = TextEditingController();
+  List<Map<String, dynamic>> _messages = [];
 
-  final scaffoldKey = GlobalKey<ScaffoldState>();
-  FFChatInfo? _chatInfo;
-  bool isGroupChat() {
-    if (widget.chatUser == null) {
-      return true;
-    }
-    if (widget.chatRef == null) {
-      return false;
-    }
-    return _chatInfo?.isGroupChat ?? false;
-  }
+  void _sendMessage(String text) {
+    setState(() {
+      _messages.add({
+        'text': text,
+        'sender': 'user',
+        'timestamp': DateTime.now(),
+      });
 
-  @override
-  void initState() {
-    super.initState();
-    _model = createModel(context, () => ChatBotModel());
-
-    FFChatManager.instance
-        .getChatInfo(
-      otherUserRecord: widget.chatUser,
-      chatReference: widget.chatRef,
-    )
-        .listen((info) {
-      if (mounted) {
-        setState(() => _chatInfo = info);
-      }
+      //PER REBRE EL MISSATGE I INTERPRETAR AQUEST (IMPORTANT!!)
+      _sendReply(text);
     });
   }
 
-  @override
-  void dispose() {
-    _model.dispose();
+  void _sendReply(String userMessage) {
+    setState(() {
+      _messages.add({
+        'text': _generateReply(userMessage),
+        'sender': 'bot',
+        'timestamp': DateTime.now(),
+      });
+    });
+  }
 
-    super.dispose();
+  String _generateReply(String userMessage) {    
+    userMessage = userMessage.toLowerCase().trim();
+
+    // if (userMessage == 'hola') {
+    //   return 'Hola';
+    // } else if (userMessage.contains('como estás')) {
+    //   return 'Estoy bien';
+    // } else if (userMessage.contains('adiós')) {
+    //   return 'Adiós';
+    // } else {
+    //   return 'No entiendo tu pregunta.';
+    // }
+
+    String responseMessage = "";
+    if (userMessage == 'hola' || userMessage == 'Holaa') {
+      responseMessage = 'Hola';
+    }
+
+    return responseMessage;
   }
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return Scaffold(
-      key: scaffoldKey,
       appBar: AppBar(
         backgroundColor: Color(0xFFA8C6FA),
         automaticallyImplyLeading: false,
@@ -91,7 +93,7 @@ class _ChatBotWidgetState extends State<ChatBotWidget> {
             Align(
               alignment: AlignmentDirectional(-1.0, 0.0),
               child: Text(
-                'Chat Bot',
+                'Chat',
                 style: FlutterFlowTheme.of(context).title1.override(
                       fontFamily: 'Poppins',
                       color: FlutterFlowTheme.of(context).primaryBtnText,
@@ -106,70 +108,72 @@ class _ChatBotWidgetState extends State<ChatBotWidget> {
         elevation: 2.0,
       ),
       body: SafeArea(
-        child: StreamBuilder<FFChatInfo>(
-          stream: FFChatManager.instance.getChatInfo(
-            otherUserRecord: widget.chatUser,
-            chatReference: widget.chatRef,
-          ),
-          builder: (context, snapshot) => snapshot.hasData
-              ? FFChatPage(
-                  chatInfo: snapshot.data!,
-                  allowImages: true,
-                  backgroundColor: Color(0xFFF2F4F8),
-                  timeDisplaySetting: TimeDisplaySetting.visibleOnTap,
-                  currentUserBoxDecoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border.all(
-                      color: Colors.transparent,
+        child: Column(
+          children: [
+            Expanded(
+              child: ListView.builder(
+                itemCount: _messages.length,
+                itemBuilder: (BuildContext context, int index) {
+                  final message = _messages[index];
+                  final isCurrentUser = message['sender'] == 'user';
+                  return Align(
+                    alignment: isCurrentUser
+                        ? Alignment.centerRight
+                        : Alignment.centerLeft,
+                    child: Container(
+                      margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                      padding:
+                          EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                      decoration: BoxDecoration(
+                        color: isCurrentUser ? Colors.white : Color(0xFFA8C6FA),
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                      child: Text(
+                        message['text'],
+                        style: GoogleFonts.getFont(
+                          'DM Sans',
+                          color:
+                              isCurrentUser ? Color(0xFF1E2429) : Colors.white,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 14.0,
+                        ),
+                      ),
                     ),
-                    borderRadius: BorderRadius.circular(15.0),
-                  ),
-                  otherUsersBoxDecoration: BoxDecoration(
-                    color: Color(0xFFA8C6FA),
-                    border: Border.all(
-                      color: Colors.transparent,
-                    ),
-                    borderRadius: BorderRadius.circular(15.0),
-                  ),
-                  currentUserTextStyle: GoogleFonts.getFont(
-                    'DM Sans',
-                    color: Color(0xFF1E2429),
-                    fontWeight: FontWeight.w500,
-                    fontSize: 14.0,
-                    fontStyle: FontStyle.normal,
-                  ),
-                  otherUsersTextStyle: GoogleFonts.getFont(
-                    'DM Sans',
-                    color: Colors.white,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 14.0,
-                  ),
-                  inputHintTextStyle: GoogleFonts.getFont(
-                    'DM Sans',
-                    color: Color(0xFF95A1AC),
-                    fontWeight: FontWeight.normal,
-                    fontSize: 14.0,
-                  ),
-                  inputTextStyle: GoogleFonts.getFont(
-                    'DM Sans',
-                    color: Colors.black,
-                    fontWeight: FontWeight.normal,
-                    fontSize: 14.0,
-                  ),
-                  emptyChatWidget: Image.asset(
-                    'assets/images/messagesEmpty@2x.png',
-                    width: MediaQuery.of(context).size.width * 0.76,
-                  ),
-                )
-              : Center(
-                  child: SizedBox(
-                    width: 50.0,
-                    height: 50.0,
-                    child: CircularProgressIndicator(
-                      color: FlutterFlowTheme.of(context).primaryColor,
+                  );
+                },
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      controller: _controller,
+                      decoration: InputDecoration(
+                        hintText: 'Escribe un mensaje...',
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        fillColor: Color(0xFFF2F4F8),
+                        filled: true,
+                      ),
                     ),
                   ),
-                ),
+                  IconButton(
+                    icon: Icon(Icons.send),
+                    onPressed: () {
+                      if (_controller.text.isNotEmpty) {
+                        _sendMessage(_controller.text);
+                        _controller.clear();
+                      }
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );
