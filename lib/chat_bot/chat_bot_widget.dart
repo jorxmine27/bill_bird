@@ -1,4 +1,5 @@
 import '/flutter_flow/chat/index.dart';
+import 'package:supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -24,6 +25,8 @@ class _ChatBotWidgetState extends State<ChatBotWidget> {
   final TextEditingController _controller = TextEditingController();
   List<Map<String, dynamic>> _messages = [];
 
+  final supabaseClient = SupabaseClient('https://ynojtnvbhcizklalzkqp.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inlub2p0bnZiaGNpemtsYWx6a3FwIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NzU4ODE1NTgsImV4cCI6MTk5MTQ1NzU1OH0.kykT0vQFlIlr9zbE2MQ_Vs486Pz9L-I48wJqxkcVrsY');
+
   void _sendMessage(String text) {
     setState(() {
       _messages.add({
@@ -32,41 +35,36 @@ class _ChatBotWidgetState extends State<ChatBotWidget> {
         'timestamp': DateTime.now(),
       });
 
-      //PER REBRE EL MISSATGE I INTERPRETAR AQUEST (IMPORTANT!!)
       _sendReply(text);
     });
   }
 
-  void _sendReply(String userMessage) {
+  Future<void> _sendReply(String userMessage) async {
+    String reply = await _generateReply(userMessage);
     setState(() {
       _messages.add({
-        'text': _generateReply(userMessage),
+        'text': reply,
         'sender': 'bot',
         'timestamp': DateTime.now(),
       });
     });
   }
 
-  String _generateReply(String userMessage) {    
-    userMessage = userMessage.toLowerCase().trim();
-
-    // if (userMessage == 'hola') {
-    //   return 'Hola';
-    // } else if (userMessage.contains('como estás')) {
-    //   return 'Estoy bien';
-    // } else if (userMessage.contains('adiós')) {
-    //   return 'Adiós';
-    // } else {
-    //   return 'No entiendo tu pregunta.';
-    // }
-
-    String responseMessage = "";
-    if (userMessage == 'hola' || userMessage == 'Holaa') {
-      responseMessage = 'Hola';
-    }
-
-    return responseMessage;
+Future<String> _generateReply(String userMessage) async {
+  
+  final response = await supabaseClient
+      .from('INFOCHAT')
+      .select('respuesta')
+      .or('mensaje1.eq.${userMessage},mensaje2.eq.${userMessage}')
+    .execute();
+  
+  if (response.data != null && response.data.length > 0) {
+    final result = response.data[0];
+    return result['respuesta'].toString();
+  } else {
+    return 'No entiendo tu pregunta. Por favor, intenta reformularla.';
   }
+}
 
   @override
   Widget build(BuildContext context) {
