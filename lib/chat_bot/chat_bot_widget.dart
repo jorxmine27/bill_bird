@@ -24,8 +24,12 @@ class ChatBotWidget extends StatefulWidget {
 class _ChatBotWidgetState extends State<ChatBotWidget> {
   final TextEditingController _controller = TextEditingController();
   List<Map<String, dynamic>> _messages = [];
+  int? lastMessageId;
 
-  final supabaseClient = SupabaseClient('https://ynojtnvbhcizklalzkqp.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inlub2p0bnZiaGNpemtsYWx6a3FwIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NzU4ODE1NTgsImV4cCI6MTk5MTQ1NzU1OH0.kykT0vQFlIlr9zbE2MQ_Vs486Pz9L-I48wJqxkcVrsY');
+  final supabaseClient = SupabaseClient(
+    'https://ynojtnvbhcizklalzkqp.supabase.co',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inlub2p0bnZiaGNpemtsYWx6a3FwIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NzU4ODE1NTgsImV4cCI6MTk5MTQ1NzU1OH0.kykT0vQFlIlr9zbE2MQ_Vs486Pz9L-I48wJqxkcVrsY',
+  );
 
   void _sendMessage(String text) {
     setState(() {
@@ -50,21 +54,33 @@ class _ChatBotWidgetState extends State<ChatBotWidget> {
     });
   }
 
-Future<String> _generateReply(String userMessage) async {
-  
-  final response = await supabaseClient
-      .from('INFOCHAT')
-      .select('respuesta')
-      .or('mensaje1.eq.${userMessage},mensaje2.eq.${userMessage}')
-    .execute();
-  
-  if (response.data != null && response.data.length > 0) {
-    final result = response.data[0];
-    return result['respuesta'].toString();
-  } else {
+  Future<String> _generateReply(String userMessage) async {
+    final response = await supabaseClient
+        .from('INFOCHAT')
+        .select('respuesta, id_last_message')
+        .or('mensaje1.eq.${userMessage},mensaje2.eq.${userMessage}')
+        .execute();
+
+    if (response.data != null && response.data.length > 0) {
+      final result = response.data[0];
+      lastMessageId = result['id_last_message'] as int?;
+      return result['respuesta'].toString();
+    } else if (lastMessageId != null) {
+      final previousMessageResponse = await supabaseClient
+          .from('INFOCHAT')
+          .select('respuesta')
+          .eq('id_message', lastMessageId)
+          .execute();
+
+      if (previousMessageResponse.data != null &&
+          previousMessageResponse.data.length > 0) {
+        final previousResult = previousMessageResponse.data[0];
+        return previousResult['respuesta'].toString();
+      }
+    }
+
     return 'No entiendo tu pregunta. Por favor, intenta reformularla.';
   }
-}
 
   @override
   Widget build(BuildContext context) {
