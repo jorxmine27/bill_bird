@@ -9,32 +9,6 @@ export 'api_manager.dart' show ApiCallResponse;
 
 const _kPrivateApiFunctionName = 'ffPrivateApiCall';
 
-class GETParqueByLatLng {
-  static Future<ApiCallResponse> call({
-    String? LatLng = ''
-  }) {
-    return ApiManager.instance.makeApiCall(
-        callName: 'Parques by LatLng',
-        apiUrl: 'https://ynojtnvbhcizklalzkqp.supabase.co/rest/v1/UBICACION?LatLng=eq.${LatLng}&select=*,PARQUE!PARQUE_id_ubicacion_fkey(*)',
-        callType: ApiCallType.GET,
-      headers: {
-        'apikey':
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inlub2p0bnZiaGNpemtsYWx6a3FwIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NzU4ODE1NTgsImV4cCI6MTk5MTQ1NzU1OH0.kykT0vQFlIlr9zbE2MQ_Vs486Pz9L-I48wJqxkcVrsY',
-        'Authorization':
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inlub2p0bnZiaGNpemtsYWx6a3FwIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NzU4ODE1NTgsImV4cCI6MTk5MTQ1NzU1OH0.kykT0vQFlIlr9zbE2MQ_Vs486Pz9L-I48wJqxkcVrsY',
-      },
-      params: {
-        'LatLng' : LatLng
-      },
-      returnBody: true,
-      encodeBodyUtf8: false,
-      decodeUtf8: false,
-      cache: false,
-    );
-  }
-}
-
-
 class GETPajarosDataCall {
   static Future<ApiCallResponse> call() {
     return ApiManager.instance.makeApiCall(
