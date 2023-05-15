@@ -18,6 +18,40 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../backend/supabase/supabase.dart';
 import '../../auth/auth_util.dart';
 
+String definirTextoHuevos(BuildContext context, String resultado, String textoOriginal, String textoASustituir) {
+
+  int numero, total;
+  String texto;
+
+  total = 0;
+  List<int> sumar = [];
+
+  if (resultado.isNotEmpty) {
+    for (int i = 0; i < resultado.length; i++) {
+      String? items = resultado[i];
+      try {
+        numero = int.parse(items);
+      } catch (e) {
+        numero = 0;
+      }
+      sumar.add(numero);
+    }
+
+    for (var items in sumar) {
+      total += items;
+    }
+
+    texto = total > 1 ? textoOriginal : textoASustituir;
+  }
+  return texto = textoOriginal;
+}
+
+String definirTextoAnos(BuildContext context, int resultado, String textoOriginal, String textoASustituir) {
+  String texto;
+  texto = resultado > 1 ? textoOriginal : textoASustituir;
+  return texto;
+}
+
 bool searchEngineFunction(
   String searchInput,
   String searchFor,
@@ -60,4 +94,17 @@ List<Marker> marcadores(ApiCallResponse Response) {
           ))
       .toList();
   return Marcadores;
+}
+
+Text anadirTexto(BuildContext context, String texto, FontWeight grosor, double tamano) {
+  var widget;
+  widget = Text(
+    texto,
+    style: FlutterFlowTheme.of(context).bodyText1.override(
+        fontFamily: 'Poppins',
+        fontSize: tamano,
+        fontWeight: grosor),
+    textAlign: TextAlign.justify,
+  );
+  return widget;
 }

@@ -47,6 +47,7 @@ class _MapWidgetState extends State<MapWidget> {
   @override
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
+    String? LatLngData;
 
     return Scaffold(
       key: scaffoldKey,
@@ -180,7 +181,12 @@ class _MapWidgetState extends State<MapWidget> {
                                   popupController: _popupLayerController,
                                   markers: Ubicaciones,
                                   markerRotateAlignment: PopupMarkerLayerOptions.rotationAlignmentFor(AnchorAlign.top),
-                                popupBuilder: (context, Ubicaciones) => park.ShowParkWidget()
+                                popupBuilder: (context, Ubicaciones) {
+                                    LatLngData = '${Ubicaciones.point.latitude},${Ubicaciones.point.longitude}'.toString();
+                                    return park.ShowParkWidget(
+                                      parque: LatLngData,
+                                    );
+                                }
                               ),),
                         ],
                       );
