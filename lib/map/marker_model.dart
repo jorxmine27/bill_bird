@@ -7,13 +7,12 @@ class MarkerBuilder {
   final String desc;
   final String horario;
 
-  MarkerBuilder({
-      required this.latLng,
+  MarkerBuilder(
+      {required this.latLng,
       required this.parkImage,
       required this.nombre,
       required this.desc,
-      required this.horario
-  });
+      required this.horario});
 
   factory MarkerBuilder.fromJson(Map<String, dynamic> json) {
     final latLng = JsonPath(r'''$[0].UBICACION.LatLng''').toString();
@@ -27,7 +26,6 @@ class MarkerBuilder {
         parkImage: parkImage,
         nombre: nombre,
         desc: desc,
-        horario: horario
-    );
+        horario: horario);
   }
 }
