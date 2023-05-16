@@ -24,23 +24,33 @@ class ChatBotWidget extends StatefulWidget {
 class _ChatBotWidgetState extends State<ChatBotWidget> {
   final TextEditingController _controller = TextEditingController();
   List<Map<String, dynamic>> _messages = [];
+  int? _lastMessageId;
 
-  final supabaseClient = SupabaseClient('https://ynojtnvbhcizklalzkqp.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inlub2p0bnZiaGNpemtsYWx6a3FwIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NzU4ODE1NTgsImV4cCI6MTk5MTQ1NzU1OH0.kykT0vQFlIlr9zbE2MQ_Vs486Pz9L-I48wJqxkcVrsY');
+  final supabaseClient = SupabaseClient(
+      'https://ynojtnvbhcizklalzkqp.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inlub2p0bnZiaGNpemtsYWx6a3FwIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NzU4ODE1NTgsImV4cCI6MTk5MTQ1NzU1OH0.kykT0vQFlIlr9zbE2MQ_Vs486Pz9L-I48wJqxkcVrsY');
 
   void _sendMessage(String text) {
-    setState(() {
-      _messages.add({
-        'text': text,
-        'sender': 'user',
-        'timestamp': DateTime.now(),
+    if (text.toLowerCase() == 'clear') {
+      setState(() {
+        _messages.clear();
+        _lastMessageId = null;
       });
+    } else {
+      setState(() {
+        _messages.add({
+          'text': text,
+          'sender': 'user',
+          'timestamp': DateTime.now(),
+        });
 
-      _sendReply(text);
-    });
+        _sendReply(text);
+      });
+    }
   }
 
   Future<void> _sendReply(String userMessage) async {
-    String reply = await _generateReply(userMessage);
+    String reply = await _generateReply(userMessage, _lastMessageId);
     setState(() {
       _messages.add({
         'text': reply,
@@ -50,21 +60,31 @@ class _ChatBotWidgetState extends State<ChatBotWidget> {
     });
   }
 
-Future<String> _generateReply(String userMessage) async {
-  
-  final response = await supabaseClient
-      .from('INFOCHAT')
-      .select('respuesta')
-      .or('mensaje1.eq.${userMessage},mensaje2.eq.${userMessage}')
-    .execute();
-  
-  if (response.data != null && response.data.length > 0) {
-    final result = response.data[0];
-    return result['respuesta'].toString();
-  } else {
-    return 'No entiendo tu pregunta. Por favor, intenta reformularla.';
+  Future<String> _generateReply(String userMessage, int? lastMessageId) async {
+    try {
+      var query = supabaseClient
+          .from('INFOCHAT')
+          .select('id_message, respuesta')
+          .or('mensaje1.eq.${userMessage},mensaje2.eq.${userMessage}');
+
+      if (lastMessageId != null) {
+        query = query.eq('id_last_message', lastMessageId);
+      }
+
+      final response = await query.execute();
+
+      if (response.data != null && response.data.length > 0) {
+        final result = response.data[0];
+        _lastMessageId = result['id_message'];
+        return result['respuesta'].toString();
+      } else {
+        return 'No entiendo tu pregunta. Por favor, intenta reformularla.';
+      }
+    } catch (e) {
+      print('Error al generar respuesta: $e');
+      return 'Ocurrió un error. Por favor, intenta de nuevo.';
+    }
   }
-}
 
   @override
   Widget build(BuildContext context) {

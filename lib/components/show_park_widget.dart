@@ -1,10 +1,8 @@
 import 'package:bill_bird/backend/api_requests/api_calls.dart';
 
-import '/backend/supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'show_park_model.dart';
 export 'show_park_model.dart';
@@ -15,6 +13,7 @@ class ShowParkWidget extends StatefulWidget {
     this.parque,
   }) : super(key: key);
 
+  //final String? parque;
   final parque;
 
   @override
@@ -52,8 +51,10 @@ class _ShowParkWidgetState extends State<ShowParkWidget> {
       child: Padding(
         padding: EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 16.0),
         child: FutureBuilder<ApiCallResponse>(
-          future: GETUbicacionDataCall.call(),
-          builder: (context, snapshot) {// Customize what your widget looks like when it's loading.
+          future: GETParqueByLatLng.call(
+            LatLng: widget.parque
+          ),
+          builder: (context, snapshot) { // Customize what your widget looks like when it's loading.
             if (!snapshot.hasData) {
               return Center(
                 child: SizedBox(
@@ -65,7 +66,7 @@ class _ShowParkWidgetState extends State<ShowParkWidget> {
                 ),
               );
             }
-            final GETUbicacionDataResponseById = snapshot.data!;
+            final GETParqueByLatLngResponse = snapshot.data!;
             return Container(
               width: 400,
               height: 500,
@@ -89,7 +90,7 @@ class _ShowParkWidgetState extends State<ShowParkWidget> {
                         color: FlutterFlowTheme.of(context).secondaryBackground,
                       ),
                       child: Image.network(
-                        getJsonField(widget.parque, r'''$..parkImage''').toString(),
+                        getJsonField(GETParqueByLatLngResponse.jsonBody, r'''$[:].PARQUE[:].parkImage''').toString(),
                         width: 80.0,
                         height: 80.0,
                         fit: BoxFit.cover,
@@ -109,9 +110,9 @@ class _ShowParkWidgetState extends State<ShowParkWidget> {
                           child: Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 0.0, 12.0, 0.0),
-                            child: Text(
-                              getJsonField(widget.parque, r'''$..id''').toString(),
-                              style: FlutterFlowTheme.of(context).title3,
+                            child: Text(getJsonField(GETParqueByLatLngResponse.jsonBody, r'''$[:].PARQUE[:].nombre''').toString(),
+                              // getJsonField(widget.parque, r'''$..id''').toString(),
+                              // style: FlutterFlowTheme.of(context).title3,
                             ),
                           ),
                         ),
@@ -121,7 +122,7 @@ class _ShowParkWidgetState extends State<ShowParkWidget> {
                       padding:
                           EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
                       child: Text(
-                        'The Parc de la Ciutadella (Catalan pronunciation: [ˈpaɾɡ də lə siwtəˈðeʎə]; \"Citadel Park\") is a park on the northeastern edge of Ciutat Vella, Barcelona, Catalonia, Spain. For decades following its creation in the mid-19th century, this park was the city\'s only green space. The 31 hectares (77 acres) grounds include the city zoo (once home to the albino gorilla Snowflake, who died in 2003), the Palau del Parlament de Catalunya, a small lake, museums, and a large fountain designed by Josep Fontserè (with possible contributions by the young Antoni Gaudí).',
+                        getJsonField(GETParqueByLatLngResponse.jsonBody, r'''$[:].PARQUE[:].desc''').toString(),
                         style: FlutterFlowTheme.of(context).bodyText2,
                       ),
                     ),
@@ -145,7 +146,7 @@ class _ShowParkWidgetState extends State<ShowParkWidget> {
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   0.0, 0.0, 12.0, 0.0),
                               child: Text(
-                                '6:00 - 22:00',
+                                getJsonField(GETParqueByLatLngResponse.jsonBody, r'''$[:].PARQUE[:].horario'''),
                                 style: FlutterFlowTheme.of(context).bodyText1,
                               ),
                             ),
