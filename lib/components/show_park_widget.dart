@@ -51,10 +51,9 @@ class _ShowParkWidgetState extends State<ShowParkWidget> {
       child: Padding(
         padding: EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 16.0),
         child: FutureBuilder<ApiCallResponse>(
-          future: GETParqueByLatLng.call(
-            LatLng: widget.parque
-          ),
-          builder: (context, snapshot) { // Customize what your widget looks like when it's loading.
+          future: GETParqueByLatLng.call(LatLng: widget.parque),
+          builder: (context, snapshot) {
+            // Customize what your widget looks like when it's loading.
             if (!snapshot.hasData) {
               return Center(
                 child: SizedBox(
@@ -90,7 +89,9 @@ class _ShowParkWidgetState extends State<ShowParkWidget> {
                         color: FlutterFlowTheme.of(context).secondaryBackground,
                       ),
                       child: Image.network(
-                        getJsonField(GETParqueByLatLngResponse.jsonBody, r'''$[:].PARQUE[:].parkImage''').toString(),
+                        getJsonField(GETParqueByLatLngResponse.jsonBody,
+                                r'''$[:].PARQUE[:].parkImage''')
+                            .toString(),
                         width: 80.0,
                         height: 80.0,
                         fit: BoxFit.cover,
@@ -110,7 +111,10 @@ class _ShowParkWidgetState extends State<ShowParkWidget> {
                           child: Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 0.0, 12.0, 0.0),
-                            child: Text(getJsonField(GETParqueByLatLngResponse.jsonBody, r'''$[:].PARQUE[:].nombre''').toString(),
+                            child: Text(
+                              getJsonField(GETParqueByLatLngResponse.jsonBody,
+                                      r'''$[:].PARQUE[:].nombre''')
+                                  .toString(),
                               // getJsonField(widget.parque, r'''$..id''').toString(),
                               // style: FlutterFlowTheme.of(context).title3,
                             ),
@@ -122,7 +126,9 @@ class _ShowParkWidgetState extends State<ShowParkWidget> {
                       padding:
                           EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
                       child: Text(
-                        getJsonField(GETParqueByLatLngResponse.jsonBody, r'''$[:].PARQUE[:].desc''').toString(),
+                        getJsonField(GETParqueByLatLngResponse.jsonBody,
+                                r'''$[:].PARQUE[:].desc''')
+                            .toString(),
                         style: FlutterFlowTheme.of(context).bodyText2,
                       ),
                     ),
@@ -146,7 +152,8 @@ class _ShowParkWidgetState extends State<ShowParkWidget> {
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   0.0, 0.0, 12.0, 0.0),
                               child: Text(
-                                getJsonField(GETParqueByLatLngResponse.jsonBody, r'''$[:].PARQUE[:].horario'''),
+                                getJsonField(GETParqueByLatLngResponse.jsonBody,
+                                    r'''$[:].PARQUE[:].horario'''),
                                 style: FlutterFlowTheme.of(context).bodyText1,
                               ),
                             ),

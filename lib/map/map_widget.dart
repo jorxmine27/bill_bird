@@ -47,11 +47,14 @@ class _MapWidgetState extends State<MapWidget> {
   @override
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
+    String? LatLngData;
 
     return Scaffold(
       key: scaffoldKey,
       resizeToAvoidBottomInset: false,
-      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+      backgroundColor: FlutterFlowTheme
+          .of(context)
+          .primaryBackground,
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
@@ -68,10 +71,13 @@ class _MapWidgetState extends State<MapWidget> {
                     alignment: AlignmentDirectional(-0.94, 0.08),
                     child: Text(
                       'MAP',
-                      style: FlutterFlowTheme.of(context).bodyText1.override(
-                            fontFamily: 'Jura',
-                            fontSize: 38.0,
-                          ),
+                      style: FlutterFlowTheme
+                          .of(context)
+                          .bodyText1
+                          .override(
+                        fontFamily: 'Jura',
+                        fontSize: 38.0,
+                      ),
                     ),
                   ),
                   Align(
@@ -87,7 +93,9 @@ class _MapWidgetState extends State<MapWidget> {
                               height: 50.0,
                               child: CircularProgressIndicator(
                                 color:
-                                    FlutterFlowTheme.of(context).primaryColor,
+                                FlutterFlowTheme
+                                    .of(context)
+                                    .primaryColor,
                               ),
                             ),
                           );
@@ -96,10 +104,13 @@ class _MapWidgetState extends State<MapWidget> {
                         return Text(
                           'Nothing',
                           style:
-                              FlutterFlowTheme.of(context).bodyText1.override(
-                                    fontFamily: 'Jura',
-                                    fontSize: 38.0,
-                                  ),
+                          FlutterFlowTheme
+                              .of(context)
+                              .bodyText1
+                              .override(
+                            fontFamily: 'Jura',
+                            fontSize: 38.0,
+                          ),
                         );
                       },
                     ),
@@ -113,7 +124,9 @@ class _MapWidgetState extends State<MapWidget> {
                       buttonSize: 60.0,
                       icon: Icon(
                         Icons.arrow_back_rounded,
-                        color: FlutterFlowTheme.of(context).primaryText,
+                        color: FlutterFlowTheme
+                            .of(context)
+                            .primaryText,
                         size: 45.0,
                       ),
                       onPressed: () async {
@@ -134,16 +147,16 @@ class _MapWidgetState extends State<MapWidget> {
                           width: 50.0,
                           height: 50.0,
                           child: CircularProgressIndicator(
-                            color: FlutterFlowTheme.of(context).primaryColor,
+                            color: FlutterFlowTheme
+                                .of(context)
+                                .primaryColor,
                           ),
                         ),
                       );
                     } else {
                       final GETUbicacionDataResponse = snapshot.data!;
-                      final Marcadores =
-                          functions.cargarUbicaciones(GETUbicacionDataResponse);
-                      final Ubicaciones =
-                          functions.marcadores(GETUbicacionDataResponse);
+                      final Marcadores = functions.cargarUbicaciones(GETUbicacionDataResponse);
+                      final Ubicaciones = functions.marcadores(GETUbicacionDataResponse);
                       return FlutterMap(
                         options: MapOptions(
                           center: latLng.LatLng(41.3958734, 2.1549861),
@@ -160,21 +173,21 @@ class _MapWidgetState extends State<MapWidget> {
                         children: [
                           TileLayer(
                             urlTemplate:
-                                'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                            'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
                             userAgentPackageName: 'com.example.app',
                           ),
                           PopupMarkerLayerWidget(
-                            options: PopupMarkerLayerOptions(
-                                popupController: _popupLayerController,
-                                markers: Ubicaciones,
-                                markerRotateAlignment: PopupMarkerLayerOptions
-                                    .rotationAlignmentFor(AnchorAlign.top),
+                              options: PopupMarkerLayerOptions(
+                                  popupController: _popupLayerController,
+                                  markers: Ubicaciones,
+                                  markerRotateAlignment: PopupMarkerLayerOptions.rotationAlignmentFor(AnchorAlign.top),
                                 popupBuilder: (context, Ubicaciones) {
-                                  latitudeLongitude:
-                                  '${Ubicaciones.point.latitude}, ${Ubicaciones.point.longitude}'.toString();
-                                  return park.ShowParkWidget();
-                                }),
-                          ),
+                                    LatLngData = '${Ubicaciones.point.latitude},${Ubicaciones.point.longitude}'.toString();
+                                    return park.ShowParkWidget(
+                                      parque: LatLngData,
+                                    );
+                                }
+                              ),),
                         ],
                       );
                     }

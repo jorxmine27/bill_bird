@@ -136,14 +136,6 @@ class GETUbicacionDataCallByLatLng {
   }
 }
 
-class GETParqueByLatLng {
-  static Future<ApiCallResponse> call(){
-    return ApiManager.instance.makeApiCall{
-      callName: 'GETParqueByLatLng',
-      apiUrl: 'https://ynojtnvbhcizklalzkqp.supabase.co/rest/v1/UBICACION?&LatLng=eq.'+ +'&select=*,PARQUE!PARQUE_id_ubicacion_fkey(*)',
-    }
-  }
-}
 class GETUbicacionDataCall {
   static Future<ApiCallResponse> call() {
     return ApiManager.instance.makeApiCall(
