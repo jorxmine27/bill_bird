@@ -12,6 +12,8 @@ import 'birds_collection_model.dart';
 export 'birds_collection_model.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
 
+var altura;
+
 class BirdsCollectionWidget extends StatefulWidget {
   const BirdsCollectionWidget({
     Key? key,
@@ -75,17 +77,46 @@ class _BirdsCollectionWidgetState extends State<BirdsCollectionWidget> {
                     ),
                   ],
                 ),
-                Padding(
-                  padding: EdgeInsetsDirectional.only(start: 8.0, top: 8.0),
-                  child: FloatingActionButton(
-                    onPressed: () async {
-                      Navigator.pop(context);
-                    },
-                    child: Icon(Icons.arrow_back),
-                    foregroundColor: Colors.black,
-                    backgroundColor: Color(0xFFFFBF00),
-                  ),
-                ),
+                Row(
+                  children: [
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.5,
+                      height: altura,
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.only(start: 16.0, top: 16.0),
+                          child: FloatingActionButton(
+                            onPressed: () async {
+                              context.pushNamed('MainPage');
+                            },
+                            child: Icon(Icons.arrow_back),
+                            foregroundColor: Colors.black,
+                            backgroundColor: Color(0xFFFFBF00),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.5,
+                      height: altura,
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.only(top: 16.0, end: 16),
+                          child: FloatingActionButton(
+                            onPressed: () async {
+                              context.pushNamed('Map');
+                            },
+                            child: Icon(Icons.map),
+                            foregroundColor: Colors.black,
+                            backgroundColor: Color(0xFFFFBF00),
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                )
               ],
             )
           ),
