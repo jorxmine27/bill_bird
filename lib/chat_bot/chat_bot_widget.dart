@@ -30,6 +30,14 @@ class _ChatBotWidgetState extends State<ChatBotWidget> {
       'https://ynojtnvbhcizklalzkqp.supabase.co',
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inlub2p0bnZiaGNpemtsYWx6a3FwIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NzU4ODE1NTgsImV4cCI6MTk5MTQ1NzU1OH0.kykT0vQFlIlr9zbE2MQ_Vs486Pz9L-I48wJqxkcVrsY');
 
+  _ChatBotWidgetState() {
+    _messages.add({
+      'text': 'Write "Hello" to start',
+      'sender': 'bot',
+      'timestamp': DateTime.now(),
+    });
+  }
+
   void _sendMessage(String text) {
     if (text.toLowerCase() == 'clear') {
       setState(() {
@@ -90,7 +98,7 @@ class _ChatBotWidgetState extends State<ChatBotWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 235, 223, 0),
+        backgroundColor: Color.fromARGB(255, 255, 191, 0),
         automaticallyImplyLeading: false,
         leading: FlutterFlowIconButton(
           borderColor: Colors.transparent,
