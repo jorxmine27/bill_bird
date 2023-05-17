@@ -90,7 +90,7 @@ class _ChatBotWidgetState extends State<ChatBotWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFFA8C6FA),
+        backgroundColor: Color.fromARGB(255, 235, 223, 0),
         automaticallyImplyLeading: false,
         leading: FlutterFlowIconButton(
           borderColor: Colors.transparent,
@@ -111,7 +111,7 @@ class _ChatBotWidgetState extends State<ChatBotWidget> {
             Align(
               alignment: AlignmentDirectional(-1.0, 0.0),
               child: Text(
-                'Chat',
+                'Ask BillBird',
                 style: FlutterFlowTheme.of(context).title1.override(
                       fontFamily: 'Poppins',
                       color: FlutterFlowTheme.of(context).primaryBtnText,
@@ -150,8 +150,9 @@ class _ChatBotWidgetState extends State<ChatBotWidget> {
                         message['text'],
                         style: GoogleFonts.getFont(
                           'DM Sans',
-                          color:
-                              isCurrentUser ? Color(0xFF1E2429) : Colors.white,
+                          color: isCurrentUser
+                              ? Color.fromARGB(255, 41, 41, 30)
+                              : Colors.white,
                           fontWeight: FontWeight.w500,
                           fontSize: 14.0,
                         ),
