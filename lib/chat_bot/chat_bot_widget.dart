@@ -24,7 +24,7 @@ class ChatBotWidget extends StatefulWidget {
 class _ChatBotWidgetState extends State<ChatBotWidget> {
   final TextEditingController _controller = TextEditingController();
   List<Map<String, dynamic>> _messages = [];
-  int? _lastMessageId;
+  int? _lastMessageId = 0;
 
   final supabaseClient = SupabaseClient(
       'https://ynojtnvbhcizklalzkqp.supabase.co',
@@ -34,7 +34,7 @@ class _ChatBotWidgetState extends State<ChatBotWidget> {
     if (text.toLowerCase() == 'clear') {
       setState(() {
         _messages.clear();
-        _lastMessageId = null;
+        _lastMessageId = 0;
       });
     } else {
       setState(() {
