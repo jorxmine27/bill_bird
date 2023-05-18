@@ -32,7 +32,8 @@ class _ChatBotWidgetState extends State<ChatBotWidget> {
 
   _ChatBotWidgetState() {
     _messages.add({
-      'text': 'Write "Hello" to start',
+      'text':
+          'Hi I am BillBird, If you want to know things about my aplicaction please, write "Hello" to start conversation.',
       'sender': 'bot',
       'timestamp': DateTime.now(),
     });
