@@ -96,15 +96,28 @@ List<Marker> marcadores(ApiCallResponse Response) {
   return Marcadores;
 }
 
-Text anadirTexto(BuildContext context, String texto, FontWeight grosor, double tamano) {
+Text anadirTexto(BuildContext context, String texto, FontWeight grosor, double tamano, bool centrar) {
   var widget;
-  widget = Text(
-    texto,
-    style: FlutterFlowTheme.of(context).bodyText1.override(
-        fontFamily: 'Poppins',
-        fontSize: tamano,
-        fontWeight: grosor),
-    textAlign: TextAlign.justify,
-  );
+  if (texto[texto.length - 1] == "\n") texto = texto.substring(0, texto.length - 1);
+  if (centrar == true) {
+    widget = Text(
+       texto,
+       style: FlutterFlowTheme.of(context).bodyText1.override(
+           fontFamily: 'Poppins',
+           fontSize: tamano,
+           fontWeight: grosor),
+       textAlign: TextAlign.center,
+    );
+  } else {
+    widget = Text(
+      texto,
+      style: FlutterFlowTheme.of(context).bodyText1.override(
+          fontFamily: 'Poppins',
+          fontSize: tamano,
+          fontWeight: grosor),
+      textAlign: TextAlign.justify,
+    );
+  }
+
   return widget;
 }
