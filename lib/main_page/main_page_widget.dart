@@ -73,9 +73,6 @@ class _MainPageWidgetState extends State<MainPageWidget> {
           },
         ),
       ),
-      drawer: Drawer(
-        elevation: 16.0,
-      ),
       body: Column(children: [
         Container(
           width: MediaQuery.of(context).size.width,
@@ -175,7 +172,13 @@ class _MainPageWidgetState extends State<MainPageWidget> {
                             child: Container(
                                 width: MediaQuery.of(context).size.width - 16.0,
                                 height: 220,
-                                color: Colors.white,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.only(
+                                    topRight: Radius.circular(45),
+                                    bottomRight: Radius.circular(45),
+                                  ),
+                                  color: Colors.white,
+                                ),
                                 child: Column(
                                   children: [
                                     Row(
@@ -183,14 +186,13 @@ class _MainPageWidgetState extends State<MainPageWidget> {
                                         Container(
                                           width: (MediaQuery.of(context).size.width * 0.85) - 8,
                                           height: 220,
-                                          color: Colors.white,
                                           child: Column(
                                             children: [
                                               Row(
                                                 children: [
                                                   Padding(
                                                     padding: EdgeInsetsDirectional.only(start: 8.0, top: 4.0),
-                                                    child: function.anadirTexto(context, getJsonField(Item, r'''$..nombre'''), FontWeight.w300, 14),
+                                                    child: function.anadirTexto(context, getJsonField(Item, r'''$..nombre'''), FontWeight.w300, 14, false),
                                                   ),
                                                 ],
                                               ),
@@ -198,7 +200,7 @@ class _MainPageWidgetState extends State<MainPageWidget> {
                                                 children: [
                                                   Padding(
                                                     padding: EdgeInsetsDirectional.only(start: 8.0, top: 2.0),
-                                                    child: function.anadirTexto(context, getJsonField(Item, r'''$..nombre_cientifico'''), FontWeight.w200, 12),
+                                                    child: function.anadirTexto(context, getJsonField(Item, r'''$..nombre_cientifico'''), FontWeight.w200, 12, false),
                                                   ),
                                                 ],
                                               ),
@@ -206,9 +208,9 @@ class _MainPageWidgetState extends State<MainPageWidget> {
                                                 children: [
                                                   Padding(
                                                     padding: EdgeInsetsDirectional.only(start: 8.0, top: 2.0),
-                                                    child: Container(
+                                                    child: SizedBox(
                                                       width: (MediaQuery.of(context).size.width * 0.85) - 24,
-                                                      height: 167,
+                                                      height: 165,
                                                       child: Image.network(
                                                         getJsonField(Item, r'''$..IMAGEN[0].url'''),
                                                         fit: BoxFit.cover
@@ -223,7 +225,13 @@ class _MainPageWidgetState extends State<MainPageWidget> {
                                         Container(
                                           width: (MediaQuery.of(context).size.width * 0.15) - 8,
                                           height: 220,
-                                          color: colorFromCssString(getJsonField(Item, r'''$..rareza'''))
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.only(
+                                              topRight: Radius.circular(45),
+                                              bottomRight: Radius.circular(45),
+                                            ),
+                                            color: colorFromCssString(getJsonField(Item, r'''$..rareza'''))
+                                          ),
                                         )
                                       ],
                                     ),

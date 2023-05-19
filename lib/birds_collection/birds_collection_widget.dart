@@ -132,11 +132,11 @@ class _BirdsCollectionWidgetState extends State<BirdsCollectionWidget> {
                         children: [
                           Padding(
                               padding: EdgeInsetsDirectional.only(start: 8.0, top: 4.0, bottom: 4.0),
-                              child: functions.anadirTexto(context, 'Name:', FontWeight.w500, 17.0)
+                              child: functions.anadirTexto(context, 'Name:', FontWeight.w500, 17.0, false)
                           ),
                           Padding(
                             padding: EdgeInsetsDirectional.only(start: 8.0, top: 4.0, bottom: 4.0),
-                            child: functions.anadirTexto(context, getJsonField(widget.detalle, r'''$..nombre'''), FontWeight.w300, 17.0),
+                            child: functions.anadirTexto(context, getJsonField(widget.detalle, r'''$..nombre'''), FontWeight.w300, 17.0, false),
                           )
                         ],
                       ),
@@ -151,7 +151,7 @@ class _BirdsCollectionWidgetState extends State<BirdsCollectionWidget> {
                         children: [
                           Padding(
                             padding: EdgeInsetsDirectional.only(start: 8.0, bottom: 4.0),
-                            child: functions.anadirTexto(context, getJsonField(widget.detalle, r'''$..nombre_cientifico'''), FontWeight.w200, 12.0),
+                            child: functions.anadirTexto(context, getJsonField(widget.detalle, r'''$..nombre_cientifico'''), FontWeight.w200, 12.0, false),
                           )
                         ],
                       ),
@@ -166,11 +166,11 @@ class _BirdsCollectionWidgetState extends State<BirdsCollectionWidget> {
                         children: [
                           Padding(
                             padding: EdgeInsetsDirectional.only(start: 8.0),
-                            child: functions.anadirTexto(context, 'LifSpan in the wild:', FontWeight.w500, 17.0),
+                            child: functions.anadirTexto(context, 'LifSpan in the wild:', FontWeight.w500, 17.0, false),
                           ),
                           Padding(
                             padding: EdgeInsetsDirectional.only(start: 8.0),
-                            child: functions.anadirTexto(context, '${getJsonField(widget.detalle, r'''$..vida''')} ${anos}', FontWeight.w300, 17.0),
+                            child: functions.anadirTexto(context, '${getJsonField(widget.detalle, r'''$..vida''')} ${anos}', FontWeight.w300, 17.0, false),
                           )
                         ],
                       ),
@@ -185,11 +185,11 @@ class _BirdsCollectionWidgetState extends State<BirdsCollectionWidget> {
                         children: [
                           Padding(
                             padding: EdgeInsetsDirectional.only(start: 8.0),
-                            child: functions.anadirTexto(context, 'Eggs quantity:', FontWeight.w500, 17.0),
+                            child: functions.anadirTexto(context, 'Eggs quantity:', FontWeight.w500, 17.0, false),
                           ),
                           Padding(
                             padding: EdgeInsetsDirectional.only(start: 8.0),
-                            child: functions.anadirTexto(context, '${getJsonField(widget.detalle, r'''$..huevos''')} ${huevos}', FontWeight.w300, 17.0),
+                            child: functions.anadirTexto(context, '${getJsonField(widget.detalle, r'''$..huevos''')} ${huevos}', FontWeight.w300, 17.0, false),
                           )
                         ],
                       ),
@@ -204,11 +204,11 @@ class _BirdsCollectionWidgetState extends State<BirdsCollectionWidget> {
                         children: [
                           Padding(
                             padding: EdgeInsetsDirectional.only(start: 8.0, bottom: 4.0),
-                            child: functions.anadirTexto(context, 'Breeding:', FontWeight.w500, 17.0),
+                            child: functions.anadirTexto(context, 'Breeding:', FontWeight.w500, 17.0, false),
                           ),
                           Padding(
                             padding: EdgeInsetsDirectional.only(start: 8.0, bottom: 4.0),
-                            child: functions.anadirTexto(context, '${getJsonField(widget.detalle, r'''$..epoca_cria''')}', FontWeight.w300, 17.0),
+                            child: functions.anadirTexto(context, '${getJsonField(widget.detalle, r'''$..epoca_cria''')}', FontWeight.w300, 17.0, false),
                           )
                         ],
                       ),
@@ -224,7 +224,7 @@ class _BirdsCollectionWidgetState extends State<BirdsCollectionWidget> {
                         scrollDirection: Axis.vertical,
                         child: Padding (
                           padding: EdgeInsetsDirectional.only(start: 8.0, end: 8.0),
-                          child: functions.anadirTexto(context, '${getJsonField(widget.detalle, r'''$..descripcion''')}', FontWeight.w300, 17.0),
+                          child: functions.anadirTexto(context, '${getJsonField(widget.detalle, r'''$..descripcion''')}', FontWeight.w300, 17.0, false),
                         )
                       ),
                     )
