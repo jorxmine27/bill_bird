@@ -17,7 +17,14 @@ import 'map_model.dart';
 import 'marker_model.dart';
 
 class MapWidget extends StatefulWidget {
-  const MapWidget({Key? key}) : super(key: key);
+  const MapWidget({
+    Key? key,
+    this.idPajaro,
+    this.nombrePajaro,
+  }) : super(key: key);
+
+  final idPajaro;
+  final nombrePajaro;
 
   @override
   _MapWidgetState createState() => _MapWidgetState();
@@ -55,146 +62,106 @@ class _MapWidgetState extends State<MapWidget> {
       backgroundColor: FlutterFlowTheme
           .of(context)
           .primaryBackground,
-      body: SafeArea(
-        child: GestureDetector(
-          onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
-          child: Column(mainAxisSize: MainAxisSize.max, children: [
-            Container(
-              width: 589.4,
-              height: 109.7,
-              decoration: BoxDecoration(
-                color: Color(0xFFFFBF00),
-              ),
-              child: Stack(
-                children: [
-                  Align(
-                    alignment: AlignmentDirectional(-0.94, 0.08),
-                    child: Text(
-                      'MAP',
-                      style: FlutterFlowTheme
-                          .of(context)
-                          .bodyText1
-                          .override(
-                        fontFamily: 'Jura',
-                        fontSize: 38.0,
+      body: GestureDetector(
+        onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+        child: Column(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height * 0.15,
+                decoration: BoxDecoration(
+                  color: Color(0xFFFFBF00),
+                ),
+                child: Row(
+                  children: [
+                    Align(
+                      alignment: AlignmentDirectional.centerStart,
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * 0.75,
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.only(start: 16, top: 16),
+                          child: functions.anadirTexto(context, widget.nombrePajaro, FontWeight.w300, 24, false),
+                        )
                       ),
                     ),
-                  ),
-                  Align(
-                    alignment: AlignmentDirectional(0.07, -0.03),
-                    child: FutureBuilder<ApiCallResponse>(
-                      future: GETPajarosDataCall.call(),
-                      builder: (context, snapshot) {
-                        // Customize what your widget looks like when it's loading.
-                        if (!snapshot.hasData) {
-                          return Center(
-                            child: SizedBox(
-                              width: 50.0,
-                              height: 50.0,
-                              child: CircularProgressIndicator(
-                                color:
-                                FlutterFlowTheme
-                                    .of(context)
-                                    .primaryColor,
-                              ),
-                            ),
-                          );
-                        }
-                        final textGETPajarosDataResponse = snapshot.data!;
-                        return Text(
-                          'Nothing',
-                          style:
-                          FlutterFlowTheme
+                    Align(
+                      alignment: AlignmentDirectional.centerEnd,
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * 0.25,
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.only(end: 16.0, top: 16.0),
+                          child: FloatingActionButton(
+                            onPressed: () async {
+                              context.pushNamed('MainPage');
+                            },
+                            child: Icon(Icons.arrow_back),
+                            foregroundColor: Colors.black,
+                            backgroundColor: Colors.white,
+                          ),
+                        ),
+                      )
+                    ),
+                  ],
+                )
+              ),
+          Expanded(
+            child: FutureBuilder<dynamic>(
+                future: GETUbicacionDataCallByBird.call(pajaro: widget.idPajaro.toString()),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return Center(
+                      child: SizedBox(
+                        width: 50.0,
+                        height: 50.0,
+                        child: CircularProgressIndicator(
+                          color: FlutterFlowTheme
                               .of(context)
-                              .bodyText1
-                              .override(
-                            fontFamily: 'Jura',
-                            fontSize: 38.0,
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                  Align(
-                    alignment: AlignmentDirectional(0.92, 0.15),
-                    child: FlutterFlowIconButton(
-                      borderColor: Colors.transparent,
-                      borderRadius: 30.0,
-                      borderWidth: 1.0,
-                      buttonSize: 60.0,
-                      icon: Icon(
-                        Icons.arrow_back_rounded,
-                        color: FlutterFlowTheme
-                            .of(context)
-                            .primaryText,
-                        size: 45.0,
+                              .primaryColor,
+                        ),
                       ),
-                      onPressed: () async {
-                        context.pushNamed('MainPage');
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Expanded(
-              child: FutureBuilder<ApiCallResponse>(
-                  future: GETUbicacionDataCall.call(),
-                  builder: (context, snapshot) {
-                    if (!snapshot.hasData) {
-                      return Center(
-                        child: SizedBox(
-                          width: 50.0,
-                          height: 50.0,
-                          child: CircularProgressIndicator(
-                            color: FlutterFlowTheme
-                                .of(context)
-                                .primaryColor,
-                          ),
+                    );
+                  } else {
+                    final GETUbicacionDataResponse = snapshot.data!;
+                    final Marcadores = functions.cargarUbicaciones(GETUbicacionDataResponse);
+                    final Ubicaciones = functions.marcadores(GETUbicacionDataResponse);
+                    return FlutterMap(
+                      options: MapOptions(
+                        center: latLng.LatLng(41.3958734, 2.1549861),
+                        zoom: 13.0,
+                        onTap: (_, __) =>
+                            _popupLayerController.hideAllPopups(),
+                      ),
+                      nonRotatedChildren: [
+                        AttributionWidget.defaultWidget(
+                          source: 'OpenStreetMap contributors',
+                          onSourceTapped: null,
                         ),
-                      );
-                    } else {
-                      final GETUbicacionDataResponse = snapshot.data!;
-                      final Marcadores = functions.cargarUbicaciones(GETUbicacionDataResponse);
-                      final Ubicaciones = functions.marcadores(GETUbicacionDataResponse);
-                      return FlutterMap(
-                        options: MapOptions(
-                          center: latLng.LatLng(41.3958734, 2.1549861),
-                          zoom: 13.0,
-                          onTap: (_, __) =>
-                              _popupLayerController.hideAllPopups(),
+                      ],
+                      children: [
+                        TileLayer(
+                          urlTemplate:
+                          'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                          userAgentPackageName: 'com.example.app',
                         ),
-                        nonRotatedChildren: [
-                          AttributionWidget.defaultWidget(
-                            source: 'OpenStreetMap contributors',
-                            onSourceTapped: null,
-                          ),
-                        ],
-                        children: [
-                          TileLayer(
-                            urlTemplate:
-                            'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                            userAgentPackageName: 'com.example.app',
-                          ),
-                          PopupMarkerLayerWidget(
-                              options: PopupMarkerLayerOptions(
-                                  popupController: _popupLayerController,
-                                  markers: Ubicaciones,
-                                  markerRotateAlignment: PopupMarkerLayerOptions.rotationAlignmentFor(AnchorAlign.top),
-                                popupBuilder: (context, Ubicaciones) {
-                                    LatLngData = '${Ubicaciones.point.latitude},${Ubicaciones.point.longitude}'.toString();
-                                    return park.ShowParkWidget(
-                                      parque: LatLngData,
-                                    );
-                                }
-                              ),),
-                        ],
-                      );
-                    }
-                  }),
-            ),
-          ]),
-        ),
+                        PopupMarkerLayerWidget(
+                          options: PopupMarkerLayerOptions(
+                              popupController: _popupLayerController,
+                              markers: Ubicaciones,
+                              markerRotateAlignment: PopupMarkerLayerOptions.rotationAlignmentFor(AnchorAlign.top),
+                              popupBuilder: (context, Ubicaciones) {
+                                LatLngData = '${Ubicaciones.point.latitude},${Ubicaciones.point.longitude}'.toString();
+                                return park.ShowParkWidget(
+                                  parque: LatLngData,
+                                );
+                              }
+                          ),),
+                      ],
+                    );
+                  }
+                }),
+          ),
+        ]),
       ),
     );
   }
