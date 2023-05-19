@@ -76,7 +76,7 @@ class _MapWidgetState extends State<MapWidget> {
                 child: Row(
                   children: [
                     Align(
-                      alignment: AlignmentDirectional.centerStart,
+                      alignment: Alignment.centerLeft,
                       child: Container(
                         width: MediaQuery.of(context).size.width * 0.75,
                         child: Padding(
@@ -85,12 +85,12 @@ class _MapWidgetState extends State<MapWidget> {
                         )
                       ),
                     ),
-                    Align(
-                      alignment: AlignmentDirectional.centerEnd,
-                      child: Container(
-                        width: MediaQuery.of(context).size.width * 0.25,
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.25,
+                      child: Align(
+                        alignment: Alignment.centerRight,
                         child: Padding(
-                          padding: EdgeInsetsDirectional.only(end: 16.0, top: 16.0),
+                          padding: EdgeInsetsDirectional.only(top: 16.0, end: 16.0),
                           child: FloatingActionButton(
                             onPressed: () async {
                               context.pushNamed('MainPage');
@@ -101,7 +101,7 @@ class _MapWidgetState extends State<MapWidget> {
                           ),
                         ),
                       )
-                    ),
+                    )
                   ],
                 )
               ),

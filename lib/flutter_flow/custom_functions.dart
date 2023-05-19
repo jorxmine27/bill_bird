@@ -98,7 +98,9 @@ List<Marker> marcadores(ApiCallResponse Response) {
 
 Text anadirTexto(BuildContext context, String texto, FontWeight grosor, double tamano, bool centrar) {
   var widget;
+
   if (texto[texto.length - 1] == "\n") texto = texto.substring(0, texto.length - 1);
+
   if (centrar == true) {
     widget = Text(
        texto,

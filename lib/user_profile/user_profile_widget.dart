@@ -185,7 +185,7 @@ class _UserProfileWidgetState extends State<UserProfileWidget> {
                                                 color: Colors.white,
                                               ),
                                               child: Center(
-                                                child: functions.anadirTexto(context, currentUserDisplayName, FontWeight.w400, 16, true),
+                                                child: functions.anadirTexto(context, "[Display Name]", FontWeight.w400, 16, true),
                                               )
                                             ),
                                           ),
