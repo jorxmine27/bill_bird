@@ -70,13 +70,13 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
       errorBuilder: (context, _) =>
-          appStateNotifier.loggedIn ? MapWidget() : LoginWidget(),
+          appStateNotifier.loggedIn ? MainPageWidget() : LoginWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
           builder: (context, _) =>
-              appStateNotifier.loggedIn ? MapWidget() : LoginWidget(),
+              appStateNotifier.loggedIn ? MainPageWidget() : LoginWidget(),
           routes: [
             FFRoute(
               name: 'CatchBird',
