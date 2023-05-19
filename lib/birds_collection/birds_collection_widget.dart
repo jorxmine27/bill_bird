@@ -4,6 +4,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart'
     as smooth_page_indicator;
+import 'package:bill_bird/map/map_widget.dart' as mapa;
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -106,7 +107,17 @@ class _BirdsCollectionWidgetState extends State<BirdsCollectionWidget> {
                           padding: EdgeInsetsDirectional.only(top: 16.0, end: 16),
                           child: FloatingActionButton(
                             onPressed: () async {
-                              context.pushNamed('Map');
+                              final identificador = getJsonField(widget.detalle, r'''$..id''').toString();
+                              final nombre = getJsonField(widget.detalle, r'''$..nombre''').toString();
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => mapa.MapWidget(
+                                      idPajaro: identificador,
+                                      nombrePajaro: nombre,
+                                    ),
+                                ),
+                              );
                             },
                             child: Icon(Icons.map),
                             foregroundColor: Colors.black,

@@ -75,7 +75,7 @@ List<latLng.LatLng> listStringToLatLng(List<String> stringsLatLng) {
 }
 
 List<String> cargarUbicaciones(ApiCallResponse Response) {
-  List<dynamic> response = getJsonField(Response.jsonBody, r'''$[:].UBICACION.LatLng''');
+  List<dynamic> response = getJsonField(Response.jsonBody, r'''$[:].UBICACION[:].LatLng''');
   List<String> coordenadas = response.cast<String>();
   return coordenadas;
 }

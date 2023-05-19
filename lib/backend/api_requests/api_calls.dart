@@ -112,6 +112,31 @@ class GetCityDataCall {
   }
 }
 
+class GETUbicacionDataCallByBird {
+  static Future<ApiCallResponse> call({
+    String? pajaro = ''
+  }) {
+    return ApiManager.instance.makeApiCall(
+      callName: 'Ubicacion Pajaros',
+      apiUrl: 'https://ynojtnvbhcizklalzkqp.supabase.co/rest/v1/PAJARO?id=eq.${pajaro}&select=*,UBICACION(*)',
+      callType: ApiCallType.GET,
+      headers: {
+        'apikey':
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inlub2p0bnZiaGNpemtsYWx6a3FwIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NzU4ODE1NTgsImV4cCI6MTk5MTQ1NzU1OH0.kykT0vQFlIlr9zbE2MQ_Vs486Pz9L-I48wJqxkcVrsY',
+        'Authorization':
+            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inlub2p0bnZiaGNpemtsYWx6a3FwIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NzU4ODE1NTgsImV4cCI6MTk5MTQ1NzU1OH0.kykT0vQFlIlr9zbE2MQ_Vs486Pz9L-I48wJqxkcVrsY',
+      },
+      params: {
+        'id' : pajaro
+      },
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+    );
+  }
+}
+
 class GETUbicacionDataCallByLatLng {
   final latlng;
   GETUbicacionDataCallByLatLng(this.latlng);

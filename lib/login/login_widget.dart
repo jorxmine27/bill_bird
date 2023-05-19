@@ -324,7 +324,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                           return;
                                         }
 
-                                        context.goNamedAuth('Map', mounted);
+                                        context.goNamedAuth('MainPage', mounted);
                                       },
                                       text: 'Sign In',
                                       options: FFButtonOptions(
@@ -750,7 +750,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                           return;
                                         }
 
-                                        context.goNamedAuth('Map', mounted);
+                                        context.goNamedAuth('MainPage', mounted);
                                       },
                                       text: 'Create Account',
                                       options: FFButtonOptions(
