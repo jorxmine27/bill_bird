@@ -9,8 +9,12 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import '/flutter_flow/custom_functions.dart' as functions;
+import 'package:bill_bird/birds_collection/birds_collection_widget.dart' as BirdCollection;
 import 'catch_bird_model.dart';
 export 'catch_bird_model.dart';
+
+var altura;
 
 class CatchBirdWidget extends StatefulWidget {
   const CatchBirdWidget({
@@ -244,56 +248,48 @@ class _CatchBirdWidgetState extends State<CatchBirdWidget> {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(15.0, 15.0, 0.0, 0.0),
-                  child: FlutterFlowIconButton(
-                    borderColor: Colors.transparent,
-                    borderRadius: 30.0,
-                    borderWidth: 1.0,
-                    buttonSize: 60.0,
-                    fillColor: Color(0xFFFFBF00),
-                    icon: Icon(
-                      Icons.arrow_back_rounded,
-                      color: FlutterFlowTheme.of(context).primaryText,
-                      size: 30.0,
-                    ),
-                    onPressed: () async {
-                      context.pushNamed('MainPage');
-                    },
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: altura,
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Padding(
+                      padding: EdgeInsetsDirectional.only(start: 16, top: 16),
+                      child: FloatingActionButton(
+                        onPressed: () async {
+                          context.pushNamed('MainPage');
+                        },
+                        child: Icon(Icons.arrow_back),
+                        foregroundColor: Colors.black,
+                        backgroundColor: Color(0xFFFFBF00),
+                      ),
+                    )
                   ),
                 ),
                 Align(
-                  alignment: AlignmentDirectional(0.9, 0.95),
-                  child: FlutterFlowIconButton(
-                    borderRadius: 30.0,
-                    borderWidth: 1.0,
-                    buttonSize: 60.0,
-                    fillColor: Color(0xFFFFBF00),
-                    icon: FaIcon(
-                      FontAwesomeIcons.info,
-                      color: Colors.black,
-                      size: 30.0,
-                    ),
-                    onPressed: () async {
-                      context.pushNamed(
-                        'BirdsCollection',
-                        queryParams: {
-                          'detalle': serializeParam(
-                            getJsonField(
-                              widget.detalle,
-                              r'''$''',
+                  alignment: Alignment.bottomRight,
+                  child: Padding(
+                    padding: EdgeInsetsDirectional.only(end: 16, bottom: 16),
+                    child: FloatingActionButton(
+                      child: Image.asset(
+                        'assets/images/info.png',
+                      ),
+                      foregroundColor: Colors.black,
+                      backgroundColor: Color(0xFFFFBF00),
+                      onPressed: () async {
+                        context.pushNamed('BirdsCollection',
+                          queryParams: {
+                            'detalle': serializeParam(getJsonField(widget.detalle,r'''$'''),
+                              ParamType.JSON,
                             ),
-                            ParamType.JSON,
-                          ),
-                        }.withoutNulls,
-                      );
-                    },
-                  ),
-                ),
-              ],
-            ),
-          ),
-        );
+                          }.withoutNulls,
+                        );
+                      },
+                    ),
+                  )
+                )
+              ],)
+            ));
       },
     );
   }

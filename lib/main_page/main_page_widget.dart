@@ -1,4 +1,5 @@
 import 'package:bill_bird/flutter_flow/custom_functions.dart' as function;
+import 'package:bill_bird/index.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -7,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:bill_bird/birds_collection/birds_collection_widget.dart' as BirdCollection;
+import 'package:bill_bird/catch_bird/catch_bird_widget.dart' as CatchBird;
 import 'main_page_model.dart';
 export 'main_page_model.dart';
 
@@ -47,6 +49,7 @@ class _MainPageWidgetState extends State<MainPageWidget> {
     context.watch<FFAppState>();
 
     BirdCollection.altura = MediaQuery.of(context).size.height * 0.15;
+    CatchBird.altura = MediaQuery.of(context).size.height * 0.15;
 
     return Scaffold(
       key: scaffoldKey,
@@ -77,7 +80,17 @@ class _MainPageWidgetState extends State<MainPageWidget> {
         Container(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height * 0.15,
-          color: Colors.amber,
+          decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black26,
+                offset: Offset(0, 4),
+                blurRadius: 2,
+                blurStyle: BlurStyle.normal
+              )
+            ],
+            color: Colors.amber,
+          ),
           child: Row(
             children: [
               Container(
@@ -85,12 +98,12 @@ class _MainPageWidgetState extends State<MainPageWidget> {
                 child: Align(
                     alignment: Alignment.centerLeft,
                     child: Padding(
-                      padding: EdgeInsetsDirectional.only(start: 16.0, top: 16.0),
+                      padding: EdgeInsetsDirectional.only(start: 16, top: 16.0),
                       child: FloatingActionButton(
                         onPressed: () async {
-                          context.pushNamed('UserProfile');
+                          context.pushNamed('CityMaps');
                         },
-                        child: Icon(Icons.person_2_rounded),
+                        child: Icon(Icons.arrow_back),
                         foregroundColor: Colors.black,
                         backgroundColor: Colors.white,
                       ),
@@ -117,20 +130,20 @@ class _MainPageWidgetState extends State<MainPageWidget> {
               Container(
                 width: MediaQuery.of(context).size.width * 0.25,
                 child: Align(
-                    alignment: Alignment.centerRight,
+                    alignment: Alignment.centerLeft,
                     child: Padding(
-                      padding: EdgeInsetsDirectional.only(top: 16.0, end: 16.0),
+                      padding: EdgeInsetsDirectional.only(start: 16.0, top: 16.0),
                       child: FloatingActionButton(
                         onPressed: () async {
-                          context.pushNamed('CityMaps');
+                          context.pushNamed('UserProfile');
                         },
-                        child: Icon(Icons.arrow_back),
+                        child: Icon(Icons.person_2_rounded),
                         foregroundColor: Colors.black,
                         backgroundColor: Colors.white,
                       ),
                     )
                 ),
-              )
+              ),
             ],
           ),
         ),
@@ -177,6 +190,14 @@ class _MainPageWidgetState extends State<MainPageWidget> {
                                     topRight: Radius.circular(45),
                                     bottomRight: Radius.circular(45),
                                   ),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black26,
+                                      offset: Offset(-2, 4),
+                                      blurRadius: 2,
+                                      blurStyle: BlurStyle.normal
+                                    )
+                                  ],
                                   color: Colors.white,
                                 ),
                                 child: Column(

@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'dart:math' as math;
 
 import 'package:bill_bird/backend/api_requests/api_calls.dart';
+import 'package:bill_bird/birds_collection/birds_collection_model.dart';
+import 'package:bill_bird/catch_bird/catch_bird_model.dart';
 import 'package:json_path/json_path.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter_map/flutter_map.dart';
