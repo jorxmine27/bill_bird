@@ -98,111 +98,102 @@ class _ChatBotWidgetState extends State<ChatBotWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 255, 191, 0),
-        automaticallyImplyLeading: false,
-        leading: FlutterFlowIconButton(
-          borderColor: Colors.transparent,
-          borderRadius: 30.0,
-          borderWidth: 1.0,
-          buttonSize: 60.0,
-          icon: Icon(
-            Icons.arrow_back_rounded,
-            color: FlutterFlowTheme.of(context).primaryBtnText,
-            size: 24.0,
+      body: Column(
+        children: [
+          Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height * 0.15,
+            decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                    color: Colors.black26,
+                    offset: Offset(0, 4),
+                    blurRadius: 2,
+                    blurStyle: BlurStyle.normal
+                )
+              ],
+              color: Color(0xFFFFBF00),
+            ),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: EdgeInsetsDirectional.only(start: 16, top: 16),
+                child: FloatingActionButton(
+                  onPressed: () async {
+                    context.pushNamed('MainPage');
+                  },
+                  child: Icon(Icons.arrow_back),
+                  foregroundColor: Colors.black,
+                  backgroundColor: Colors.white,
+                ),
+              )
+            )
           ),
-          onPressed: () async {
-            context.pop();
-          },
-        ),
-        title: Stack(
-          children: [
-            Align(
-              alignment: AlignmentDirectional(-1.0, 0.0),
-              child: Text(
-                'Ask BillBird',
-                style: FlutterFlowTheme.of(context).title1.override(
-                      fontFamily: 'Poppins',
-                      color: FlutterFlowTheme.of(context).primaryBtnText,
+          Expanded(
+            child: ListView.builder(
+              itemCount: _messages.length,
+              itemBuilder: (BuildContext context, int index) {
+                final message = _messages[index];
+                final isCurrentUser = message['sender'] == 'user';
+                return Align(
+                  alignment: isCurrentUser
+                      ? Alignment.centerRight
+                      : Alignment.centerLeft,
+                  child: Container(
+                    margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                    padding:
+                    EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                    decoration: BoxDecoration(
+                      color: isCurrentUser ? Colors.white : Color(0xFFA8C6FA),
+                      borderRadius: BorderRadius.circular(15.0),
                     ),
-              ),
-            ),
-          ],
-        ),
-        actions: [],
-        centerTitle: false,
-        toolbarHeight: MediaQuery.of(context).size.height * 0.15,
-        elevation: 2.0,
-      ),
-      body: SafeArea(
-        child: Column(
-          children: [
-            Expanded(
-              child: ListView.builder(
-                itemCount: _messages.length,
-                itemBuilder: (BuildContext context, int index) {
-                  final message = _messages[index];
-                  final isCurrentUser = message['sender'] == 'user';
-                  return Align(
-                    alignment: isCurrentUser
-                        ? Alignment.centerRight
-                        : Alignment.centerLeft,
-                    child: Container(
-                      margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                      padding:
-                          EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                      decoration: BoxDecoration(
-                        color: isCurrentUser ? Colors.white : Color(0xFFA8C6FA),
-                        borderRadius: BorderRadius.circular(15.0),
-                      ),
-                      child: Text(
-                        message['text'],
-                        style: GoogleFonts.getFont(
-                          'DM Sans',
-                          color: isCurrentUser
-                              ? Color.fromARGB(255, 41, 41, 30)
-                              : Colors.white,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 14.0,
-                        ),
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 16),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: TextField(
-                      controller: _controller,
-                      decoration: InputDecoration(
-                        hintText: 'Escribe un mensaje...',
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide.none,
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        fillColor: Color(0xFFF2F4F8),
-                        filled: true,
+                    child: Text(
+                      message['text'],
+                      style: GoogleFonts.getFont(
+                        'DM Sans',
+                        color: isCurrentUser
+                            ? Color.fromARGB(255, 41, 41, 30)
+                            : Colors.white,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14.0,
                       ),
                     ),
                   ),
-                  IconButton(
-                    icon: Icon(Icons.send),
-                    onPressed: () {
-                      if (_controller.text.isNotEmpty) {
-                        _sendMessage(_controller.text);
-                        _controller.clear();
-                      }
-                    },
-                  ),
-                ],
-              ),
+                );
+              },
             ),
-          ],
-        ),
+          ),
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 16),
+            child: Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: _controller,
+                    decoration: InputDecoration(
+                      hintText: 'Escribe un mensaje...',
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      fillColor: Color(0xFFF2F4F8),
+                      filled: true,
+                    ),
+                  ),
+                ),
+                IconButton(
+                  icon: Icon(Icons.send),
+                  onPressed: () {
+                    if (_controller.text.isNotEmpty) {
+                      _sendMessage(_controller.text);
+                      _controller.clear();
+                    }
+                  },
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

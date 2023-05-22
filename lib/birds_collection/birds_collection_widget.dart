@@ -13,7 +13,7 @@ import 'birds_collection_model.dart';
 export 'birds_collection_model.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
 
-var altura;
+var altura, reproductor;
 
 class BirdsCollectionWidget extends StatefulWidget {
   const BirdsCollectionWidget({
@@ -78,6 +78,38 @@ class _BirdsCollectionWidgetState extends State<BirdsCollectionWidget> {
                     ),
                   ],
                 ),
+                Align(
+                  alignment: AlignmentDirectional(0.0, 1.0),
+                  child: Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(
+                        0.0, 0.0, 0.0, 10.0),
+                    child: smooth_page_indicator
+                        .SmoothPageIndicator(
+                      controller: _model.pageViewController ??=
+                          PageController(initialPage: 0),
+                      count: 3,
+                      axisDirection: Axis.horizontal,
+                      onDotClicked: (i) {
+                        _model.pageViewController!
+                            .animateToPage(
+                          i,
+                          duration: Duration(milliseconds: 500),
+                          curve: Curves.ease,
+                        );
+                      },
+                      effect: smooth_page_indicator.ExpandingDotsEffect(
+                        expansionFactor: 2.0,
+                        spacing: 8.0,
+                        radius: 16.0,
+                        dotWidth: 16.0,
+                        dotHeight: 16.0,
+                        dotColor: Color(0xFF9E9E9E),
+                        activeDotColor: Color(0xFFFFBF00),
+                        paintStyle: PaintingStyle.fill,
+                      ),
+                    ),
+                  ),
+                ),
                 Row(
                   children: [
                     Container(
@@ -90,6 +122,7 @@ class _BirdsCollectionWidgetState extends State<BirdsCollectionWidget> {
                           child: FloatingActionButton(
                             onPressed: () async {
                               context.pushNamed('MainPage');
+                              reproductor.stop();
                             },
                             child: Icon(Icons.arrow_back),
                             foregroundColor: Colors.black,
@@ -248,10 +281,9 @@ class _BirdsCollectionWidgetState extends State<BirdsCollectionWidget> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          AssetsAudioPlayer.newPlayer().open(
-            Audio.network(getJsonField(widget.detalle,r'''$..sonido''')),
-            autoStart: true,
-          );
+          reproductor = AssetsAudioPlayer.newPlayer();
+          reproductor.open(Audio.network(getJsonField(widget.detalle,r'''$..sonido''')));
+          reproductor.play();
         },
         child: SizedBox(
           height: 45.0,
