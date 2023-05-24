@@ -67,6 +67,7 @@ class _UserProfileWidgetState extends State<UserProfileWidget> {
 
     return Scaffold(
       key: scaffoldKey,
+      resizeToAvoidBottomInset: false,
       backgroundColor: Color(0xFFA8C6FA),
       body: Column(
         children: [
