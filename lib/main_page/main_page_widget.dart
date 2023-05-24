@@ -7,18 +7,23 @@ import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:bill_bird/search_page/search_page_widget.dart' as Search;
 import 'package:bill_bird/birds_collection/birds_collection_widget.dart' as BirdCollection;
 import 'package:bill_bird/catch_bird/catch_bird_widget.dart' as CatchBird;
 import 'main_page_model.dart';
 export 'main_page_model.dart';
 
+late final dynamic informacion;
+
 class MainPageWidget extends StatefulWidget {
   const MainPageWidget({
     Key? key,
     this.pajaro,
+    this.ciudad,
   }) : super(key: key);
 
   final dynamic pajaro;
+  final dynamic ciudad;
 
   @override
   _MainPageWidgetState createState() => _MainPageWidgetState();
@@ -55,27 +60,6 @@ class _MainPageWidgetState extends State<MainPageWidget> {
       key: scaffoldKey,
       backgroundColor: Color(0xFFA8C6FA),
       resizeToAvoidBottomInset: false,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          print('FloatingActionButton pressed ...');
-        },
-        backgroundColor: Color(0xFFFFBF00),
-        elevation: 8.0,
-        child: FlutterFlowIconButton(
-          borderColor: Colors.transparent,
-          borderRadius: 3.0,
-          borderWidth: 1.0,
-          buttonSize: 60.0,
-          icon: Icon(
-            Icons.search,
-            color: FlutterFlowTheme.of(context).primaryText,
-            size: 30.0,
-          ),
-          onPressed: () async {
-            context.pushNamed('SearchPage');
-          },
-        ),
-      ),
       body: Column(children: [
         Container(
           width: MediaQuery.of(context).size.width,
@@ -151,7 +135,9 @@ class _MainPageWidgetState extends State<MainPageWidget> {
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height * 0.85,
           child: FutureBuilder<ApiCallResponse>(
-              future: GETPajarosDataCall.call(),
+              future: GETPajarosDataCallByCiudad.call(
+                ciudad: widget.ciudad
+              ),
               builder: (context, snapshot) {
                 if (!snapshot.hasData) {
                   return Center(
@@ -215,7 +201,7 @@ class _MainPageWidgetState extends State<MainPageWidget> {
                                                     padding: EdgeInsetsDirectional.only(start: 8.0, top: 4.0),
                                                     child: function.anadirTexto(context, getJsonField(Item, r'''$..nombre'''), FontWeight.w300, 14, false),
                                                   ),
-                                                ],
+                                                ]
                                               ),
                                               Row(
                                                 children: [
@@ -265,6 +251,38 @@ class _MainPageWidgetState extends State<MainPageWidget> {
               }),
         ),
       ]),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          print('FloatingActionButton pressed ...');
+        },
+        backgroundColor: Color(0xFFFFBF00),
+        elevation: 8.0,
+        child: FlutterFlowIconButton(
+          borderColor: Colors.transparent,
+          borderRadius: 3.0,
+          borderWidth: 1.0,
+          buttonSize: 60.0,
+          icon: Icon(
+            Icons.search,
+            color: FlutterFlowTheme.of(context).primaryText,
+            size: 30.0,
+          ),
+          onPressed: () async {
+            final informacion = GETPajarosDataCallByCiudad.call(
+                ciudad: widget.ciudad
+            );
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => Search.SearchPageWidget(
+                  detalle: informacion,
+                  ciudad: widget.ciudad,
+                )
+              )
+            );
+          },
+        ),
+      ),
     );
   }
 }

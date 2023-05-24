@@ -1,8 +1,11 @@
+import 'package:bill_bird/main_page/main_page_widget.dart';
+
 import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
+import 'package:bill_bird/birds_collection/birds_collection_widget.dart' as BirdCollection;
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -14,9 +17,11 @@ class SearchPageWidget extends StatefulWidget {
   const SearchPageWidget({
     Key? key,
     this.detalle,
+    this.ciudad,
   }) : super(key: key);
 
   final dynamic detalle;
+  final dynamic ciudad;
 
   @override
   _SearchPageWidgetState createState() => _SearchPageWidgetState();
@@ -82,7 +87,7 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                         padding: EdgeInsetsDirectional.only(start: 16, top: 16),
                         child: FloatingActionButton(
                           onPressed: () async {
-                            context.pushNamed('MainPage');
+                            Navigator.pop(context);
                           },
                           child: Icon(Icons.arrow_back),
                           foregroundColor: Colors.black,
@@ -140,7 +145,9 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                   ),
                   SingleChildScrollView(
                     child: FutureBuilder<ApiCallResponse>(
-                      future: GETPajarosDataCall.call(),
+                      future: GETPajarosDataCallByCiudad.call(
+                        ciudad: widget.ciudad
+                      ),
                       builder: (context, snapshot) {
                         // Customize what your widget looks like when it's loading.
                         if (!snapshot.hasData) {
@@ -185,18 +192,14 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                             16.0, 5.0, 0.0, 5.0),
                                         child: InkWell(
                                             onTap: () async {
-                                              context.pushNamed(
-                                                'BirdsCollection',
-                                                queryParams: {
-                                                  'detalle': serializeParam(
-                                                    getJsonField(
-                                                      pajaroItem,
-                                                      r'''$''',
-                                                    ),
-                                                    ParamType.JSON,
-                                                  ),
-                                                }.withoutNulls,
-                                              );
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) => BirdCollection.BirdsCollectionWidget(
+                                                      detalle: pajaroItem,
+                                                    )
+                                                  )
+                                                );
                                             },
                                             child: Container(
                                               width: MediaQuery.of(context).size.width,

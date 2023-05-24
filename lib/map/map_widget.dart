@@ -8,6 +8,7 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
+import 'package:bill_bird/main_page/main_page_widget.dart' as MainPage;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -19,10 +20,12 @@ import 'marker_model.dart';
 class MapWidget extends StatefulWidget {
   const MapWidget({
     Key? key,
+    this.idCiudad,
     this.idPajaro,
     this.nombrePajaro,
   }) : super(key: key);
 
+  final idCiudad;
   final idPajaro;
   final nombrePajaro;
 
@@ -91,7 +94,14 @@ class _MapWidgetState extends State<MapWidget> {
                         padding: EdgeInsetsDirectional.only(start: 16.0, top: 16.0),
                         child: FloatingActionButton(
                           onPressed: () async {
-                            context.pushNamed('MainPage');
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => MainPage.MainPageWidget(
+                                  ciudad: widget.idCiudad,
+                                ),
+                              )
+                            );
                           },
                           child: Icon(Icons.arrow_back),
                           foregroundColor: Colors.black,

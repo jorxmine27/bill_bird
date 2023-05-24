@@ -5,6 +5,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart'
     as smooth_page_indicator;
 import 'package:bill_bird/map/map_widget.dart' as mapa;
+import 'package:bill_bird/main_page/main_page_widget.dart' as MainPage;
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -121,7 +122,15 @@ class _BirdsCollectionWidgetState extends State<BirdsCollectionWidget> {
                           padding: EdgeInsetsDirectional.only(start: 16.0, top: 16.0),
                           child: FloatingActionButton(
                             onPressed: () async {
-                              context.pushNamed('MainPage');
+                              final id_ciudad = getJsonField(widget.detalle, r'''$..ciudad''').toString();
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => MainPage.MainPageWidget(
+                                        ciudad: id_ciudad,
+                                      )
+                                  )
+                              );
                               reproductor.stop();
                             },
                             child: Icon(Icons.arrow_back),
@@ -140,12 +149,14 @@ class _BirdsCollectionWidgetState extends State<BirdsCollectionWidget> {
                           padding: EdgeInsetsDirectional.only(top: 16.0, end: 16),
                           child: FloatingActionButton(
                             onPressed: () async {
-                              final identificador = getJsonField(widget.detalle, r'''$..id''').toString();
+                              final ciudad = getJsonField(widget.detalle, r'''$..ciudad''').toString();
+                              final identificador = getJsonField(widget.detalle, r'''$..identificador''').toString();
                               final nombre = getJsonField(widget.detalle, r'''$..nombre''').toString();
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => mapa.MapWidget(
+                                      idCiudad: ciudad,
                                       idPajaro: identificador,
                                       nombrePajaro: nombre,
                                     ),

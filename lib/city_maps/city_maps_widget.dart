@@ -4,6 +4,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:bill_bird/main_page/main_page_widget.dart' as MainPage;
 import 'city_maps_model.dart';
 export 'city_maps_model.dart';
 
@@ -115,7 +116,15 @@ class _CityMapsWidgetState extends State<CityMapsWidget> {
                                             15.0, 15.0, 0.0, 0.0),
                                         child: InkWell(
                                           onTap: () async {
-                                            context.pushNamed('MainPage');
+                                            final id_ciudad = getJsonField(ciudadesItem, r'''$..id''').toString();
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) => MainPage.MainPageWidget(
+                                                  ciudad: id_ciudad,
+                                                )
+                                              )
+                                            );
                                           },
                                           child: Text(
                                             getJsonField(
