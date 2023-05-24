@@ -3,6 +3,7 @@ import 'package:bill_bird/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
+import 'package:bill_bird/flutter_flow/custom_functions.dart' as function;
 import 'package:provider/provider.dart';
 import 'show_park_model.dart';
 export 'show_park_model.dart';
@@ -111,13 +112,12 @@ class _ShowParkWidgetState extends State<ShowParkWidget> {
                           child: Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 0.0, 12.0, 0.0),
-                            child: Text(
-                              getJsonField(GETParqueByLatLngResponse.jsonBody,
-                                      r'''$[:].PARQUE[:].nombre''')
-                                  .toString(),
-                              // getJsonField(widget.parque, r'''$..id''').toString(),
-                              // style: FlutterFlowTheme.of(context).title3,
-                            ),
+                            child: function.anadirTexto(context, getJsonField(GETParqueByLatLngResponse.jsonBody, r'''$[:].PARQUE[:].nombre'''), FontWeight.w500, 12, false)
+                            // Text(
+                            //   getJsonField(GETParqueByLatLngResponse.jsonBody,
+                            //           r'''$[:].PARQUE[:].nombre''')
+                            //       .toString(),
+                            // ),
                           ),
                         ),
                       ],
@@ -125,11 +125,10 @@ class _ShowParkWidgetState extends State<ShowParkWidget> {
                     Padding(
                       padding:
                           EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
-                      child: Text(
-                        getJsonField(GETParqueByLatLngResponse.jsonBody,
-                                r'''$[:].PARQUE[:].desc''')
-                            .toString(),
-                        style: FlutterFlowTheme.of(context).bodyText2,
+                      child: Container(
+                        width: 400,
+                        height: 163,
+                        child: function.anadirTexto(context, getJsonField(GETParqueByLatLngResponse.jsonBody, r'''$[:].PARQUE[:].desc'''), FontWeight.w300, 10, false),
                       ),
                     ),
                     Padding(
@@ -151,11 +150,12 @@ class _ShowParkWidgetState extends State<ShowParkWidget> {
                             child: Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   0.0, 0.0, 12.0, 0.0),
-                              child: Text(
-                                getJsonField(GETParqueByLatLngResponse.jsonBody,
-                                    r'''$[:].PARQUE[:].horario'''),
-                                style: FlutterFlowTheme.of(context).bodyText1,
-                              ),
+                              child: function.anadirTexto(context, getJsonField(GETParqueByLatLngResponse.jsonBody, r'''$[:].PARQUE[:].horario'''), FontWeight.w500, 14, false)
+                              // Text(
+                              //   getJsonField(GETParqueByLatLngResponse.jsonBody,
+                              //       r'''$[:].PARQUE[:].horario'''),
+                              //   style: FlutterFlowTheme.of(context).bodyText1,
+                              // ),
                             ),
                           ),
                         ],
