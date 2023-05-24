@@ -324,7 +324,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                           return;
                                         }
 
-                                        context.goNamedAuth('MainPage', mounted);
+                                        context.goNamedAuth('CityMaps', mounted);
                                       },
                                       text: 'Sign In',
                                       options: FFButtonOptions(
