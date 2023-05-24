@@ -120,7 +120,7 @@ class _ChatBotWidgetState extends State<ChatBotWidget> {
                 padding: EdgeInsetsDirectional.only(start: 16, top: 16),
                 child: FloatingActionButton(
                   onPressed: () async {
-                    context.pushNamed('MainPage');
+                    Navigator.pop(context);
                   },
                   child: Icon(Icons.arrow_back),
                   foregroundColor: Colors.black,
